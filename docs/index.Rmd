@@ -15,6 +15,7 @@ library(janitor) # cleaning data
 library(gt) # tables
 library(here) # directory structure (will be useful later)
 library(vroom)
+library(stringr)
 ```
 
 
@@ -119,26 +120,49 @@ prescription_data_urls <- c(
 ```
 
 
-```{r Looped prescirption data reading}
-#iterate each object in the named list of prescription url
-for (name in names(prescription_data_urls))
-{
+```{r}
+read_and_clean <- function(url) {
   # vroom used as a faster function for reading delimited files
   # only columns with prescription drug name, health board, and number of items paid selected to make loading onto R more memory efficient
     #since older data files have health board column named HBT2014 while newer have is named HBT, any_of() is used to select only the ones that exist in the file being read
-  data <- vroom(prescription_data_urls[[name]], col_select = any_of(c(columns_needed_from_prescription, "HBT", "HBT2014")), skip_empty_rows = TRUE)
+  data <- vroom(url, col_select = any_of(c(columns_needed_from_prescription, "HBT", "HBT2014")), skip_empty_rows = TRUE)
   
-  # contraceptives names separated with | operator to later pass it to filtering to look for either of the drug names in the drug names column
+   # contraceptives names separated with | operator to later pass it to filtering to look for either of the drug names in the drug names column
   drug_name_with_OR <- paste(contraceptives, collapse = "|")
  
   #data filtered for contraceptives only
   data_filtered <- data %>%
-  filter(str_detect(BNFItemDescription, drug_name_with_OR))
+  filter(str_detect(BNFItemDescription, drug_name_with_OR)) %>% 
+    clean_names()
+  colnames(data_filtered)[3] ="hb"
 
   
   # assign function used to create a value with the name of the url from named list and assign read preprocessed data to that variable
-  assign(name, data_filtered) 
+name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
+assign(name, data_filtered, envir = .GlobalEnv) 
 }
 
+lapply(prescription_data_urls, read_and_clean)
 ```
+
+```{r Sum contraceptives per health board}
+#sum the number of items paid for by health board
+summarise_and_add_data <- function(url) {
+  name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
+  data <- get(name) 
+  data <- data %>% 
+    group_by(hb) %>% 
+    summarise(sum_of_contraceptives_paid = sum(number_of_paid_items, na.rm = TRUE)) %>% 
+    add_column(year = as.numeric(str_extract_all(name, "\\d+")))
+  
+  
+  object_name <- paste(name, "sum", sep = "_")
+  assign(object_name, data, envir = .GlobalEnv) 
+}
+
+lapply(prescription_data_urls, summarise_data)
+```
+
+
+
 
