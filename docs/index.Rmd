@@ -3,12 +3,21 @@ title: "Assesment"
 output: html_document
 date: "2024-11-01"
 ---
+# Pregnancy termination trend over 6 year period in light of contraceptives dispensation trends
+
+
+
+AIMS:
+
+1. To see if there is a national trend correlation between number of dispensed contraceptives (oral and devices)
+2. To see if this trend is maintained within health boards
+3. To see in deprived areas 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Data reading
+
 ```{r Used packages}
 library(tidyverse)
 library(janitor) # cleaning data
@@ -21,13 +30,7 @@ library(stringr)
 
 ```{r Contraceptives and columns of interest}
 
-columns_needed_from_prescription <- c("BNFItemDescription", "NumberOfPaidItems")
-
-contraceptives <- c("MERCILON", "GEDAREL", "FEMODETTE", "MILLINETTE", "SUNYA", "LOESTRIN",
- "MARVELON", "CIMIZT", "YASMIN", "LUCETTE", "FEMODENE", "KATYA", "LEVEST",
- "MICROGYNON", "OVRANETTE", "RIGEVIDON", "CILEST", "LIZINNA", "BREVINOR",
- "OVYSMEN", "NORIMIN", "NORINYL", "CERAZETTE", "CERELLE", "ZELLETA",
- "NORIDAY", "NORGESTON")
+columns_needed_from_prescription <- c("BNFItemCode", "NumberOfPaidItems")
 
 ```
 
@@ -36,6 +39,12 @@ contraceptives <- c("MERCILON", "GEDAREL", "FEMODETTE", "MILLINETTE", "SUNYA", "
 #data on abortion 2000-2023
 abortion_data <- read_csv("https://www.opendata.nhs.scot/dataset/d684d4a5-f7ae-4a1a-ae8d-adf55304274e/resource/342f9627-dfdd-41f5-a27c-0a3c7bcb8672/download/residence_age_2023.csv") %>% 
   clean_names()
+```
+
+```{r}
+health_boards <- read_csv("https://www.opendata.nhs.scot/dataset/9f942fdb-e59e-44f5-b534-d6e17229cc7b/resource/652ff726-e676-4a20-abda-435b98dd7bdc/download/hb14_hb19.csv") %>% 
+  clean_names() %>% 
+  select(hb, hb_name)
 ```
 
 
@@ -127,12 +136,10 @@ read_and_clean <- function(url) {
     #since older data files have health board column named HBT2014 while newer have is named HBT, any_of() is used to select only the ones that exist in the file being read
   data <- vroom(url, col_select = any_of(c(columns_needed_from_prescription, "HBT", "HBT2014")), skip_empty_rows = TRUE)
   
-   # contraceptives names separated with | operator to later pass it to filtering to look for either of the drug names in the drug names column
-  drug_name_with_OR <- paste(contraceptives, collapse = "|")
  
-  #data filtered for contraceptives only
+  #data filtered for contraceptives (including contraceptive devices) only (based on the BNF code)
   data_filtered <- data %>%
-  filter(str_detect(BNFItemDescription, drug_name_with_OR)) %>% 
+  filter(str_starts(BNFItemCode, "0703") | str_starts(BNFItemCode, "21040")) %>% 
     clean_names()
   colnames(data_filtered)[3] ="hb"
 
@@ -145,14 +152,12 @@ assign(name, data_filtered, envir = .GlobalEnv)
 lapply(prescription_data_urls, read_and_clean)
 ```
 
-```{r Sum contraceptives per health board}
+```{r Combine all prescription datases}
 #sum the number of items paid for by health board
-summarise_and_add_data <- function(url) {
+add_year <- function(url) {
   name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
   data <- get(name) 
   data <- data %>% 
-    group_by(hb) %>% 
-    summarise(sum_of_contraceptives_paid = sum(number_of_paid_items, na.rm = TRUE)) %>% 
     add_column(year = as.numeric(str_extract_all(name, "\\d+")))
   
   
@@ -160,34 +165,54 @@ summarise_and_add_data <- function(url) {
   assign(object_name, data, envir = .GlobalEnv) 
 }
 
-lapply(prescription_data_urls, summarise_data)
-```
 
-
-```{r Combine all datasets into one}
+lapply(prescription_data_urls, add_year)
 
 full_prescirption_dataset <- bind_rows(mget(paste(names(prescription_data_urls), "sum", sep = "_")))
 
-full_prescirption_dataset_grouped <- full_prescirption_dataset %>% 
-  group_by(year) %>% 
-  summarise(number_of_contraceptives_per_year = sum(sum_of_contraceptives_paid))
-  
-
 ```
 
 
-```{r}
-plot_prescription <- full_prescirption_dataset_grouped %>% 
-  ggplot(aes(y = number_of_contraceptives_per_year, x = year)) +
+```{r filter datasets to create long term and short term contraception datasets}
+long_term_contraception <- full_prescirption_dataset %>% 
+  filter(str_detect(bnf_item_code, "0703022P|0703023|210400002")) %>% 
+  group_by(year) %>% 
+  summarise(sum_of_contraceptive_items = sum(number_of_paid_items, na.rm = TRUE))
+
+short_term_contraception <- full_prescirption_dataset %>% 
+  filter(!str_detect(bnf_item_code, "0703022P|0703023|210400002")) %>% 
+  group_by(year) %>% 
+  summarise(sum_of_contraceptive_items = sum(number_of_paid_items, na.rm = TRUE))
+
+```
+
+## Contraceptives and pregnancy termination trends
+
+
+
+
+```{r Extract information from prescription datasets}
+
+plot_prescription_long_term <- long_term_contraception %>% 
+  ggplot(aes(y = sum_of_contraceptive_items, x = year)) +
+  labs(title = "plot_prescription_long_term") +
   geom_line() 
-plot_prescription
+plot_prescription_long_term
+
+plot_prescription_short_term <- short_term_contraception %>% 
+  ggplot(aes(y = sum_of_contraceptive_items, x = year)) +
+  labs(title = "plot_prescription_short_term") +
+  geom_line() 
+plot_prescription_short_term
+
 
 plot_abortion <- abortion_data %>% 
-  filter(age_group == "All Ages", as.numeric(yearof_termination) %in% c(2018,2019,2020,2021,2022,2023)) %>% 
-  group_by(yearof_termination) %>% 
-  summarise(number_of_terminations_per_year = sum(numberof_terminations, na.rm = TRUE)) %>% 
-  ggplot(aes(y = number_of_terminations_per_year, x = yearof_termination)) +
-  geom_line() 
+  filter(age_group == "All Ages", as.numeric(yearof_termination) %in% c(2018:2023)) %>% 
+  # group_by(yearof_termination) %>% 
+  # summarise(number_of_terminations_per_year = sum(numberof_terminations, na.rm = TRUE)) %>% 
+  ggplot(aes(y = numberof_terminations, x = yearof_termination)) +
+  geom_line() +
+  facet_wrap(~hbr)
 plot_abortion
 ```
 
