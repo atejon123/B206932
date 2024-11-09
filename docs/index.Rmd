@@ -164,5 +164,30 @@ lapply(prescription_data_urls, summarise_data)
 ```
 
 
+```{r Combine all datasets into one}
 
+full_prescirption_dataset <- bind_rows(mget(paste(names(prescription_data_urls), "sum", sep = "_")))
+
+full_prescirption_dataset_grouped <- full_prescirption_dataset %>% 
+  group_by(year) %>% 
+  summarise(number_of_contraceptives_per_year = sum(sum_of_contraceptives_paid))
+  
+
+```
+
+
+```{r}
+plot_prescription <- full_prescirption_dataset_grouped %>% 
+  ggplot(aes(y = number_of_contraceptives_per_year, x = year)) +
+  geom_line() 
+plot_prescription
+
+plot_abortion <- abortion_data %>% 
+  filter(age_group == "All Ages", as.numeric(yearof_termination) %in% c(2018,2019,2020,2021,2022,2023)) %>% 
+  group_by(yearof_termination) %>% 
+  summarise(number_of_terminations_per_year = sum(numberof_terminations, na.rm = TRUE)) %>% 
+  ggplot(aes(y = number_of_terminations_per_year, x = yearof_termination)) +
+  geom_line() 
+plot_abortion
+```
 
