@@ -5,57 +5,84 @@ date: "2024-11-01"
 ---
 # Pregnancy termination trend over 6 year period in light of contraceptives dispensation trends
 
+Birth control availability was a liberating step towards women having full control of their reproduction. However, in recent years there has been a decreasing trend in oral contraception usage [reference]. Some of these changes might be attributed to social media discussions on these topics [https://www.sciencedirect.com/science/article/pii/S0277953623004380#bib15]. Extensive list of side effects have been brought into light and dissmissive attitude of general health practitioners when it comes to a contraceptive choice has been discussed. On the one hand, it empowers women with knowledge to make an informed choice, while on the other hand it creates a space for missinformation and skewed experiences getting more representation than the general ones. 
+
+Nevertheless, female contraceptives remain being the most reliable way to prevent unwanted pregnancy [reference]. With its effects being brought into focus it probes a question of how the trends of contraceptives usage relate to pregnancy termination statistics. 
+
+This report will explore contraceptive trends used by females in Scotland between 2018 and 2023 and look how this trend correlated with pregnancy termination statistics.
 
 
-AIMS:
+### AIMS:
 
-1. To see if there is a national trend correlation between number of dispensed contraceptives (oral and devices)
-2. To see if this trend is maintained within health boards
-3. To see in deprived areas 
+1. To see if there is a national trend in short-term (oral, injections, and implants) and long-term (IUD and coil) contraceptives usage in women of reproductive age in Scotland;
+2. To see if a similar trend is maintained in different health boards;
+3. Look at the correlation between contraceptive trend and pregnancy termination trend nation wide and within health boards.
+4. Discuss the possible 
+
+
+Hypothesis: contraceptive usage decline in some way can be associated with increase in pregnancy termination.
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(include = FALSE)
 ```
 
 
-```{r Used packages}
+```{r Used packages, include=FALSE}
 library(tidyverse)
 library(janitor) # cleaning data
 library(gt) # tables
 library(here) # directory structure (will be useful later)
 library(vroom)
 library(stringr)
+library(viridis)
 ```
 
+## Data used in the report
 
-```{r Contraceptives and columns of interest}
+Abortion and prescription data used in this report has been obtained from [Public Health Scotland](https://www.opendata.nhs.scot/dataset). For showing the contraceptive usage trend in 6 years all age data was used that includes females under 20 to females over 40. 
 
-columns_needed_from_prescription <- c("BNFItemCode", "NumberOfPaidItems")
-
-```
+To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 of women in the health board in accordance to 2022 Cencus data. Only women of biological reproductive age were included as they are the most likely to be included in the statistic. The chosen respoductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [https://academic.oup.com/hropen/article/2022/2/hoac005/6527206#356986178].
 
 
-```{r Abortion data }
-#data on abortion 2000-2023
-abortion_data <- read_csv("https://www.opendata.nhs.scot/dataset/d684d4a5-f7ae-4a1a-ae8d-adf55304274e/resource/342f9627-dfdd-41f5-a27c-0a3c7bcb8672/download/residence_age_2023.csv") %>% 
-  clean_names() %>% 
-  rename(hb = "hbr")
-```
 
-```{r Heatlh board names and population}
+```{r Heatlh board names and population, include=FALSE}
 health_boards <- read_csv("https://www.opendata.nhs.scot/dataset/9f942fdb-e59e-44f5-b534-d6e17229cc7b/resource/652ff726-e676-4a20-abda-435b98dd7bdc/download/hb14_hb19.csv") %>% 
   clean_names() %>% 
   select(hb, hb_name)
 
-health_board_population <- read_csv("https://s3-eu-west-1.amazonaws.com/statistics.digitalresources.jisc.ac.uk/dkan/files/2022/NRS/UV103/census_2022_UV103_age_Health_Board_Area_2019.csv", skip = 10) %>% 
+health_board_population <- read_csv(here( "data", "UV103_age_health_board_census.csv"), skip = 10) %>% 
   clean_names() %>% 
   rename(hb_name = "health_board_area_2019") %>% 
-  filter(age == "All people") %>% 
-  select(hb_name, count)
+  filter(age %in% c(13:50), sex == "Female") %>% 
+  group_by(hb_name) %>% 
+  summarise(female_repro_population = sum(count)) %>% 
+  mutate(hb_name = paste("NHS", hb_name))
 ```
 
 
-```{r URLs for prescription data}
+
+```{r Abortion data, include=FALSE}
+#data on abortion 2000-2023
+abortion_data <- read_csv("https://www.opendata.nhs.scot/dataset/d684d4a5-f7ae-4a1a-ae8d-adf55304274e/resource/342f9627-dfdd-41f5-a27c-0a3c7bcb8672/download/residence_age_2023.csv") %>% 
+  clean_names() %>% 
+  rename(hb = "hbr", year = "yearof_termination") %>% 
+  filter(age_group == "All Ages") %>% 
+  select(year, hb, numberof_terminations)
+
+abortion_data <- left_join(health_boards,abortion_data,  by = "hb") 
+abortion_data <- left_join(abortion_data, health_board_population, by = "hb_name") 
+
+abortion_data <- abortion_data %>% 
+  mutate(abortion_per_1000_women = numberof_terminations/female_repro_population * 1000)
+
+
+```
+
+Prescription data has been filtered based on BNF item code. Codes beginning with 0703 and 21040 were selected as representing contraceptive medication and devices. 
+
+As for pregnancy termination data, number of items count was normalised per 1000 of women of reproductive age in the health board based on 2022 Cencus data. 
+
+```{r URLs for prescription data, include=FALSE}
 #prescription data between 2018 and 2023 in a names vector
 
 prescription_data_urls <- c(
@@ -136,7 +163,10 @@ prescription_data_urls <- c(
 ```
 
 
-```{r}
+
+```{r Data reading and cleaning}
+columns_needed_from_prescription <- c("BNFItemCode", "NumberOfPaidItems")
+
 read_and_clean <- function(url) {
   # vroom used as a faster function for reading delimited files
   # only columns with prescription drug name, health board, and number of items paid selected to make loading onto R more memory efficient
@@ -175,29 +205,41 @@ add_year <- function(url) {
 
 lapply(prescription_data_urls, add_year)
 
+#join full prescription dataset with healh board names and populations of women of reproductive age
 full_prescirption_dataset <- bind_rows(mget(paste(names(prescription_data_urls), "sum", sep = "_")))
-
+full_prescirption_dataset <- left_join(health_boards, full_prescirption_dataset, by = "hb")
+full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_population, by = "hb_name")
 ```
 
+The data was then further devided into long term contraceptives (IUD, coil, and implant) lasting several years and short term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to short-term cathegory. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
 
 ```{r filter datasets to create long term and short term contraception datasets}
 long_term_contraception <- full_prescirption_dataset %>% 
   filter(str_detect(bnf_item_code, "0703022P|0703023|210400002")) %>% 
-  group_by(year) %>% 
-  summarise(sum_of_contraceptive_items = sum(number_of_paid_items, na.rm = TRUE))
+  group_by(year, hb_name, female_repro_population) %>% 
+  summarise(sum_of_contraceptive_items = sum(number_of_paid_items, na.rm = TRUE)) %>% 
+  mutate(contracep_items_per_1000_women = sum_of_contraceptive_items/female_repro_population*1000)
 
 short_term_contraception <- full_prescirption_dataset %>% 
   filter(!str_detect(bnf_item_code, "0703022P|0703023|210400002")) %>% 
-  group_by(year) %>% 
-  summarise(sum_of_contraceptive_items = sum(number_of_paid_items, na.rm = TRUE))
+  group_by(year, hb_name, female_repro_population) %>% 
+  summarise(sum_of_contraceptive_items = sum(number_of_paid_items, na.rm = TRUE)) %>% 
+  mutate(contracep_items_per_1000_women = sum_of_contraceptive_items/female_repro_population*1000)
 
 ```
 
-## Contraceptives and pregnancy termination trends
 
-```{r Joining health boards with data}
-abortion_data <- left_join(health_boards,abortion_data,  by = "hb") 
+## Results
 
+### Contraceptives trends
+
+It has been shown that over the past 8 years there has been a decline in combined oral contraceptives being prescribed while the progesterone only pill prescriptions increased [https://srh.bmj.com/content/early/2024/05/24/bmjsrh-2024-202387]. While it shows that women preference might be shifting away from estrogen containing products it doesn't tell much about the overall trend in contraceptive usage. 
+
+Figure 1 shows that there is a nationwide decline in any contraception usage.
+
+```{r Figure 1 Gross contraception usage}
+full_prescirption_dataset %>% 
+  
 ```
 
 
@@ -205,23 +247,23 @@ abortion_data <- left_join(health_boards,abortion_data,  by = "hb")
 ```{r Extract information from prescription datasets}
 
 plot_prescription_long_term <- long_term_contraception %>% 
-  ggplot(aes(y = sum_of_contraceptive_items, x = year)) +
+  ggplot(aes(y = contracep_items_per_1000_women, x = year, colour = hb_name)) +
   labs(title = "plot_prescription_long_term") +
-  geom_line() 
+  geom_line()
 plot_prescription_long_term
 
 plot_prescription_short_term <- short_term_contraception %>% 
-  ggplot(aes(y = sum_of_contraceptive_items, x = year)) +
+  ggplot(aes(y = contracep_items_per_1000_women, x = year, colour = hb_name)) +
   labs(title = "plot_prescription_short_term") +
+  scale_colour_manual(values = rainbow(14)) +
   geom_line() 
 plot_prescription_short_term
 
 
 plot_abortion <- abortion_data %>% 
-  filter(age_group == "All Ages", as.numeric(yearof_termination) %in% c(2018:2023)) %>% 
-  # group_by(yearof_termination) %>% 
-  # summarise(number_of_terminations_per_year = sum(numberof_terminations, na.rm = TRUE)) %>% 
-  ggplot(aes(y = numberof_terminations, x = yearof_termination, colour = hb_name)) +
+  filter(year %in% c(2018:2023)) %>% 
+  ggplot(aes(y = abortion_per_1000_women, x = year, colour = hb_name)) +
+  scale_colour_manual(values = rainbow(11)) +
   geom_line() 
 plot_abortion
 ```
