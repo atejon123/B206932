@@ -86,6 +86,7 @@ As for pregnancy termination data, number of items count was normalised per 1000
 #prescription data between 2018 and 2023 in a names vector
 
 prescription_data_urls <- c(
+# List for 2023
   "dec_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/00cdf8d7-f784-4e87-894c-34f2540ea6ab/download/pitc202312.csv",
   "nov_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/21d11fed-a494-4e30-9bb6-46143c3b9530/download/pitc202311.csv",
   "oct_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/94134438-db1d-4b8d-8f70-5e9b0e47bd03/download/pitc202310.csv",
@@ -98,6 +99,8 @@ prescription_data_urls <- c(
   "mar_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/8dd06c58-1a09-483a-8a01-5d68cfb8b38e/download/pitc202303.csv",
   "feb_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ad6d7f4e-08fd-40ed-ad49-bf450d386f39/download/pitc202302.csv",
   "jan_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/6caa7144-f0e4-4ab0-b9e4-8fa10c8edf1c/download/pitc202301.csv",
+
+# List for 2022
   "jan_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/53a53d61-3b3b-4a12-888b-a788ce13db9c/download/pitc202201.csv",
   "feb_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/bd7aa5c9-d708-4d0b-9b28-a9d822c84e34/download/pitc202202.csv",
   "mar_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/a0ec3bf2-7339-413b-9c66-2891cfd7919f/download/pitc202203.csv",
@@ -110,6 +113,8 @@ prescription_data_urls <- c(
   "oct_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/bd7bc2cf-4de5-4711-bd5a-9e3b77305453/download/pitc202210.csv",
   "nov_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/023986c0-3bb2-43cb-84e8-2e0b3bb1f55f/download/pitc202211.csv",
   "dec_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/00213ffa-941e-4389-9e6f-3bca8067da8c/download/pitc202212.csv",
+
+# List for 2021
   "jan_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/7722a6e6-a6b6-49ec-aa63-fdc4bc727f05/download/pitc202101.csv",
   "feb_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3f5c55ac-1bcd-4c57-a7b6-12911f15239c/download/pitc202102.csv",
   "mar_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/df6fc708-5c50-4d57-a5c4-faa19a92c227/download/pitc202103.csv",
@@ -122,6 +127,8 @@ prescription_data_urls <- c(
   "oct_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/35cbc6b1-3462-4563-88ba-d57c03782534/download/pitc202110.csv",
   "nov_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/6ba23bd1-f53b-4946-bc79-00633239d08f/download/pitc202111.csv",
   "dec_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ad9e7b46-47fb-4d42-baad-f8e98e8f5936/download/pitc202112.csv",
+
+# List for 2020
   "jan_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/e5c841f2-3e16-428b-97db-0798ec7a5fb4/download/pitc202001.csv",
   "feb_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/af121e7c-4124-4955-92e9-a9580ccd469e/download/pitc202002.csv",
   "mar_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/9581bd8d-5568-4462-93a6-6d7bfbbe7cbc/download/pitc202003.csv",
@@ -134,6 +141,8 @@ prescription_data_urls <- c(
   "oct_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/83bf4892-d246-41f8-a6ca-d44d18e2a2ca/download/pitc202010.csv",
   "nov_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ab8aa642-2562-4abb-a360-5c5f9e7e349c/download/pitc202011.csv",
   "dec_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0c033702-4d88-4f2d-989c-a709b1f4529e/download/pitc202012.csv",
+
+# List for 2019
   "jan_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3bd6e3cc-b8b7-493b-b6aa-f9fcadbb05d2/download/pitc201901.csv",
   "feb_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3729a5c8-787a-46e3-ab7d-feed9aa91b4e/download/pitc201902.csv",
   "mar_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/87b21840-beb8-40fd-bad8-579643bc8b8b/download/pitc201903.csv",
@@ -146,6 +155,8 @@ prescription_data_urls <- c(
   "oct_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/55d93898-5382-4a59-a42e-bbc68f48b217/download/pitc201910.csv",
   "nov_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/eeee4a8f-3439-425a-aacd-58e536da90a0/download/pitc201911.csv",
   "dec_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/fa276ad2-669a-472f-9c47-809f199fae21/download/pitc201912.csv",
+
+# List for 2018
   "jan_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/82ef2c55-5a31-4759-ab9a-83b176e107f2/download/pitc201801.csv",
   "feb_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/1ae16a5f-aa26-4911-989b-ba4a6ab87037/download/pitc201802.csv",
   "mar_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0b7bc1dd-9731-405b-a55e-656a8c996a58/download/pitc201803.csv",
@@ -157,7 +168,35 @@ prescription_data_urls <- c(
   "sep_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/bd18b099-942d-42fb-9fa5-b947714381cd/download/pitc201809.csv",
   "oct_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/37e94a73-121e-443e-9564-2e1d9e36c5eb/download/pitc201810.csv",
   "nov_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/9cc56231-f184-4e29-a5ef-e6080bc78e93/download/pitc201811.csv",
-  "dec_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/c50ed972-34e8-4cd6-8d2e-349e875c3ffa/download/pitc201812.csv"
+  "dec_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/c50ed972-34e8-4cd6-8d2e-349e875c3ffa/download/pitc201812.csv",
+ 
+# List for 2017 
+  "jan_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3def845e-c830-4b73-8e02-e42adcde5afa/download/pitc201701.csv",
+  "feb_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/f7a00faf-49ec-4a99-9686-e52b2d1572c4/download/pitc201702.csv",
+  "mar_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/06c958d6-bae7-4d1b-9b62-88db123dc7b6/download/pitc201703.csv",
+  "apr_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/78ff3279-2486-497c-968c-256a12631088/download/pitc201704.csv",
+  "may_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/014bf682-7413-4418-abc6-233e145dd454/download/pitc201705.csv",
+  "jun_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/13042cf7-fa4e-464c-aa9f-18c5213fb7b0/download/pitc201706.csv",
+  "jul_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/44bc24dd-3a8e-4056-8ee2-eb903bc352ac/download/pitc201707.csv",
+  "aug_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ff0da464-d78f-4394-add2-101e78820932/download/pitc201708.csv",
+  "sep_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/106c27b7-4615-4a14-a7d9-8dc22f86dbd2/download/pitc201709.csv",
+  "oct_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/01cdd69a-049a-46cf-a618-75b5f93422f1/download/pitc201710.csv",
+  "nov_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0d9b6b7d-bd94-4d72-8806-22025edcdeeb/download/pitc201711.csv",
+  "dec_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/a39b254a-ab6a-41d5-a920-5ff34bdb9f6b/download/pitc201712.csv",
+
+# List for 2016
+  "jan_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/7c487db9-f450-4319-8b18-4b825380692b/download/pitc201601.csv",
+  "feb_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0727befa-5530-4c1d-aff0-ccb7554eff7a/download/pitc201602.csv",
+  "mar_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/20ad9575-4bd7-4bf4-af41-fd36071e2301/download/pitc201603.csv",
+  "apr_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/e44eb789-b8e0-41d9-a264-eba18b2d2473/download/pitc201604.csv",
+  "may_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/90ebb5ed-bc22-4bbc-8915-d55ae9d9906e/download/pitc201605.csv",
+  "jun_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/a636862a-77e0-4c97-ba97-268578534a8e/download/pitc201606.csv",
+  "jul_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/c12c905b-3a2d-4b7a-b5d2-8c359b786beb/download/pitc201607.csv",
+  "aug_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/bbd1d028-b9c6-4a28-b579-eafcaaa44703/download/pitc201608.csv",
+  "sep_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/2e0d6f14-3752-4c42-9a02-34d867132737/download/pitc201609.csv",
+  "oct_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/f22c20c1-6066-4f7d-a939-3ae654d1467a/download/pitc201610.csv",
+  "nov_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/5d421ba3-ccba-4d98-9772-e2e042b29a0f/download/pitc201611.csv",
+  "dec_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/597ea4bc-f733-45b6-8a60-5d7a6ac4824c/download/pitc201612.csv"
 
 )
 ```
@@ -235,11 +274,47 @@ short_term_contraception <- full_prescirption_dataset %>%
 
 It has been shown that over the past 8 years there has been a decline in combined oral contraceptives being prescribed while the progesterone only pill prescriptions increased [https://srh.bmj.com/content/early/2024/05/24/bmjsrh-2024-202387]. While it shows that women preference might be shifting away from estrogen containing products it doesn't tell much about the overall trend in contraceptive usage. 
 
-Figure 1 shows that there is a nationwide decline in any contraception usage.
+Figure 1 shows that there is a nationwide decline in birth control usage. There is a steep drop from pre-Covid to Covid year. It is hard to day whether the decline from year 2022 to 2023 is still due to Covid or if it represents a general trend of decline. Seeing that there was ______ over pre-Covid years it could be suspected that ______ .
 
 ```{r Figure 1 Gross contraception usage}
 full_prescirption_dataset %>% 
+  group_by(year) %>% 
+  summarise(sum=sum(number_of_paid_items)) %>% 
+  ggplot(aes(y=sum, x=year)) +
+  geom_line(color="#69b3a2", size=2) +
+  theme_classic() +
+  theme(plot.title = element_text(size = 13, 
+                                  hjust = 0,
+                                  face = "bold", 
+                                  margin = margin(10,10,10,10)), 
+                                  axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
+                                  axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
+  labs(title = "Figure 1. Gross prescription of contraceptives between 2018 and 2023", x = "Year", y = "Number of items dispensed") +
+  geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
+  geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
+  annotate(geom="text", x=2021, y=826000, 
+             label="--------- COVID period ---------", colour = "#71797E") 
+```
+
+### Long-term and short term contraceptives
+
+Women have multiple options when it comes to birth control, including short term options like oral pill and long-term options like IUD the coil. However, some women report feeling like they were not actually given a choice when it came to their birth control [https://www.sciencedirect.com/science/article/pii/S0277953623004380#bib15]. They report feeling like their GP's prescribed oral contraceptives by default. (With this coming to light women are taking control of their heatlh>>>>> Looging at Scotland wide trends of long term versus short term contrateption it can be seen that short-term contraception is on a consistent decline over the past ___ years. Covid doesn't seem to have had much of an impact on these prescriptions. However, when it comes to long-term contraceptives it is clear that covid hindered their use. That is likely because application of intravaginal devices and impants have to be performed by medical professional and during covid clinics' work was focused on emergency medical care. 
+
+```{r}
+long_term_contraception %>% 
+  summarise(sum=sum(number_of_paid_items)) %>% 
+  ggplot(aes(y=sum, x=year)) +
+  labs(title = "plot_prescription_long_term") +
+  geom_line()
+plot_prescription_long_term
+
+short_term_contraception %>% 
   
+  ggplot(aes(y = contracep_items_per_1000_women, x = year) +
+  labs(title = "plot_prescription_short_term") +
+  scale_colour_manual(values = rainbow(14)) +
+  geom_line() 
+
 ```
 
 
