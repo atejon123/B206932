@@ -34,7 +34,7 @@ library(gt) # tables
 library(here) # directory structure (will be useful later)
 library(vroom)
 library(stringr)
-library(viridis)
+library(ggiraph)
 ```
 
 ## Data used in the report
@@ -278,36 +278,37 @@ Figure 1 shows that there is a nationwide decline in birth control usage. There 
 
 Interestingly, there is a sharp rise in contraceptive use in 2019.
 
-```{r Figure 1 Gross contraception usage}
+```{r Figure 1, fig.cap='Fig 1. Gross prescription of contraceptives between 2016 and 2023'}
 full_prescirption_dataset %>% 
   group_by(year) %>% 
   summarise(sum=sum(number_of_paid_items)) %>% 
   ggplot(aes(y=sum, x=year)) +
-  geom_line(color="#69b3a2", size=2) +
+  geom_line(color="#69b3a2", linewidth=2) +
   theme_classic() +
+  scale_x_continuous(breaks=c(2016:2023)) +
   theme(plot.title = element_text(size = 13, 
                                   hjust = 0,
                                   face = "bold", 
                                   margin = margin(10,10,10,10)), 
                                   axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
                                   axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
-  labs(title = "Figure 1. Gross prescription of contraceptives between 2016 and 2023", x = "Year", y = "Number of items dispensed") +
+  labs(title = "Gross prescription of contraceptives between 2016 and 2023", x = "Year", y = "Number of items dispensed") +
   geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
   geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
-  annotate(geom="text", x=2021, y=826000, 
-             label="----- COVID period -----", colour = "#71797E") 
+  annotate(geom="text", x=2021, y=855000, 
+             label="COVID period", colour = "#71797E") 
 ```
 
 ### Long-term and short term contraceptives
 
 Women have multiple options when it comes to birth control, including short term options like oral pill and long-term options like IUD the coil. However, some women report feeling like they were not actually given a choice when it came to their birth control [https://www.sciencedirect.com/science/article/pii/S0277953623004380#bib15]. They report feeling like their GP's prescribed oral contraceptives by default. (With this coming to light women are taking control of their heatlh>>>>> 
 
-To compare the trend of the long term and short term contraceptives all values were tormalised to 2018. It can be seen that short-term contraception is on a consistent decline over the past 8 years. Covid doesn't seem to have had much of an impact on these prescriptions. However, when it comes to long-term contraceptives it is clear that covid hindered their use. That is likely because application of intravaginal devices and impants require medical professionals and during Covid clinics' had to focus their resources on emergency medical care. 
+To compare the trend of the long term and short term contraceptives all values were tormalised to 2018. It can be seen that short-term contraception is on a consistent decline over the past 8 years. Covid doesn't seem to have had much of an impact on these prescriptions. However, when it comes to long-term contraceptives it is clear that Covid hindered their use. That is likely because application of intravaginal devices and implants require medical professionals and during Covid clinics' had to focus their resources on emergency medical care. 
 
 The rise in contraceptive use in 2019 seems to be influenced by both types of contraceptives.
 
 
-```{r Figure 2. Short term and long term contraception trends}
+```{r Figure 2, fig.cap='Fig. 2: Normalised prescription of long-term and short-term contraceptives'}
 long_term_contraception_yearly_gross <- long_term_contraception %>% 
   group_by(year) %>% 
   summarise(sum=sum(sum_of_contraceptive_items)/29109)
@@ -317,20 +318,21 @@ short_term_contraception_yearly_gross <- short_term_contraception %>%
   summarise(sum=sum(sum_of_contraceptive_items)/865093)
  
 ggplot() +
-  geom_line(data = long_term_contraception_yearly_gross, aes(y = sum, x = year), color = "#6D91F2") +
-  geom_line(data = short_term_contraception_yearly_gross, aes(y = sum, x = year), color = "#6DF2A6") +
+  geom_line(data = long_term_contraception_yearly_gross, aes(y = sum, x = year), color = "#6D91F2", linewidth = 2) +
+  geom_line(data = short_term_contraception_yearly_gross, aes(y = sum, x = year), color = "#6DF2A6", linewidth=2) +
   geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
   geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
   theme_classic() +
+  scale_x_continuous(breaks=c(2016:2023)) +
   theme(plot.title = element_text(size = 13, 
                                   hjust = 0,
                                   face = "bold", 
                                   margin = margin(10,10,10,10)), 
                                   axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
                                   axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
-  labs(title = "Figure 2. Normalised prescription of long-term and short-term contraceptives", x = "Year", y = "Normalised value of items dispensed per year") +
+  labs(title = "Normalised prescription of long-term and short-term contraceptives", x = "Year", y = "Normalised value of items dispensed per year") +
   annotate(geom="text", x=2021, y=1, 
-             label="----- COVID period -----", colour = "#71797E") 
+             label="COVID period", colour = "#71797E") 
 
 ```
 
@@ -338,17 +340,29 @@ ggplot() +
 
 ```{r Extract information from prescription datasets}
 
-plot_prescription_long_term <- long_term_contraception %>% 
-  ggplot(aes(y = contracep_items_per_1000_women, x = year, colour = hb_name)) +
-  labs(title = "plot_prescription_long_term") +
-  geom_line()
-plot_prescription_long_term
+
+long_term_contraception %>% 
+  mutate(hb_name1 = hb_name) %>% 
+  ggplot(aes(y = contracep_items_per_1000_women, x = year)) +
+  geom_line(data=plot_contraceptives_long_term %>% dplyr::select(-hb_name), aes(group=hb_name1), color="grey", size=0.5, alpha=0.5) +
+  geom_line(aes(color=hb_name), color="#69b3a2", size=1.2 )+
+  theme_classic() +
+  theme(plot.title = element_text(size = 13, 
+                                  hjust = 0,
+                                  face = "bold", 
+                                  margin = margin(10,10,10,10)), 
+                                  axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
+                                  axis.title.y = element_text(size = 11, margin=margin(0,10,0,0)),
+                                  legend.position="none") +
+  labs(title = "Long-term contraceptive items per 1000 women", x = "Year", y = "Number of items per 1000 women") +
+  facet_wrap(~hb_name)
+
 
 plot_prescription_short_term <- short_term_contraception %>% 
   ggplot(aes(y = contracep_items_per_1000_women, x = year, colour = hb_name)) +
   labs(title = "plot_prescription_short_term") +
   scale_colour_manual(values = rainbow(14)) +
-  geom_line() 
+  geom_line_interactive(hover_nearest = TRUE) 
 plot_prescription_short_term
 
 
