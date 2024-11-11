@@ -57,6 +57,24 @@ health_board_population <- read_csv(here( "data", "UV103_age_health_board_census
   group_by(hb_name) %>% 
   summarise(female_repro_population = sum(count)) %>% 
   mutate(hb_name = paste("NHS", hb_name))
+
+health_board_population <- left_join(health_board_population, health_boards, by = "hb_name") %>% 
+  mutate(hb_name = factor(hb_name, labels = c(
+  "NHS Ayrshire and Arran" = "Ayrshire and Arran",
+  "NHS Borders" = "Borders",
+  "NHS Dumfries and Galloway" = "Dumfries and Galloway",
+  "NHS Fife" = "Fife",
+  "NHS Forth Valley" = "Forth Valley",
+  "NHS Grampian" = "Grampian",
+  "NHS Greater Glasgow and Clyde" = "Greater Glasgow and Clyde",
+  "NHS Highland" = "Highland",
+  "NHS Lanarkshire" = "Lanarkshire",
+  "NHS Lothian" = "Lothian",
+  "NHS Orkney" = "Orkney",
+  "NHS Shetland" = "Shetland",
+  "NHS Tayside" = "Tayside",
+  "NHS Western Isles" = "Western Isles"
+)))
 ```
 
 
@@ -69,11 +87,9 @@ abortion_data <- read_csv("https://www.opendata.nhs.scot/dataset/d684d4a5-f7ae-4
   filter(age_group == "All Ages") %>% 
   select(year, hb, numberof_terminations)
 
-abortion_data <- left_join(health_boards,abortion_data,  by = "hb") 
-abortion_data <- left_join(abortion_data, health_board_population, by = "hb_name") 
-
-abortion_data <- abortion_data %>% 
-  mutate(abortion_per_1000_women = numberof_terminations/female_repro_population * 1000)
+abortion_data <- left_join(abortion_data, health_board_population, by = "hb")  %>% 
+  mutate(abortion_per_1000_women = numberof_terminations/female_repro_population * 1000) %>% 
+  filter(!is.na(hb_name))
 
 
 ```
@@ -246,8 +262,8 @@ lapply(prescription_data_urls, add_year)
 
 #join full prescription dataset with healh board names and populations of women of reproductive age
 full_prescirption_dataset <- bind_rows(mget(paste(names(prescription_data_urls), "sum", sep = "_")))
-full_prescirption_dataset <- left_join(health_boards, full_prescirption_dataset, by = "hb")
-full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_population, by = "hb_name")
+full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_population, by = "hb") 
+  
 ```
 
 The data was then further devided into long term contraceptives (IUD, coil, and implant) lasting several years and short term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to short-term cathegory. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
@@ -336,16 +352,21 @@ ggplot() +
 
 ```
 
+### Contraceptive trends in NHS Scotland health boards
 
 
-```{r Extract information from prescription datasets}
 
+```{r Figure 3,  fig.cap=c('Fig. 3: Long-term contraceptive item prescription across NHS Scotland boards', 'Fig. 4: Short-term contraceptive item prescription across NHS Scotland boards')}
 
-long_term_contraception %>% 
+plot_across_boards <- function(starting_data){
+  plot_prescription <- starting_data %>% 
+  ungroup() %>%
   mutate(hb_name1 = hb_name) %>% 
-  ggplot(aes(y = contracep_items_per_1000_women, x = year)) +
-  geom_line(data=plot_contraceptives_long_term %>% dplyr::select(-hb_name), aes(group=hb_name1), color="grey", size=0.5, alpha=0.5) +
-  geom_line(aes(color=hb_name), color="#69b3a2", size=1.2 )+
+  select(-hb_name) 
+  
+  ggplot() +
+  geom_line(data=plot_prescription , aes(group=hb_name1, y = contracep_items_per_1000_women, x = year), color="grey", size=0.5, alpha=0.5) +
+  geom_line(data = starting_data, aes(group = hb_name, color=hb_name, y = contracep_items_per_1000_women, x = year), size=1.2 )+
   theme_classic() +
   theme(plot.title = element_text(size = 13, 
                                   hjust = 0,
@@ -353,9 +374,27 @@ long_term_contraception %>%
                                   margin = margin(10,10,10,10)), 
                                   axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
                                   axis.title.y = element_text(size = 11, margin=margin(0,10,0,0)),
-                                  legend.position="none") +
-  labs(title = "Long-term contraceptive items per 1000 women", x = "Year", y = "Number of items per 1000 women") +
-  facet_wrap(~hb_name)
+                                  legend.position="none",
+                                  strip.text.x = element_text(
+        size = 10, face = "bold"
+        ), strip.background = element_rect(
+     color=FALSE, fill=FALSE
+     )) +
+  labs(title = "Long-term contraceptive item prescription across NHS Scotland boards", x = "Year", y = "Number of items per 1000 women") +
+  facet_wrap(~hb_name, nrow = 3, 
+             labeller = label_wrap_gen(18))
+}
+
+plot_across_boards(long_term_contraception)
+plot_across_boards(short_term_contraception)
+
+```
+
+
+```{r Extract information from prescription datasets}
+
+
+  
 
 
 plot_prescription_short_term <- short_term_contraception %>% 
@@ -372,5 +411,10 @@ plot_abortion <- abortion_data %>%
   scale_colour_manual(values = rainbow(11)) +
   geom_line() 
 plot_abortion
+
+
+
 ```
+
+
 
