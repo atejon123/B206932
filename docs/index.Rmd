@@ -5,17 +5,16 @@ date: "2024-11-01"
 ---
 # Pregnancy termination and contraception trend over 8 year period in Scotland
 
-Birth control availability was a liberating step towards women having full control of their reproduction. However, this liberation started shifting towards new means of constraints by society putting a huge burden on women as a sole responsibility bearers when it comes to pregnancy prevention. Female contraceptives being the most effective birth control means that women have to put up with extensive list of side effects with no equivalent male alternatives. In recent years, health risks associated with hormonal contraceptive usage started being discussed more [https://www.sciencedirect.com/science/article/pii/S0277953621005797#bib55]. Social media plays a significant role in shaping opinions about hormonal contraceptives and in turn their decline in various western countries [https://www.sciencedirect.com/science/article/pii/S0277953623004380#bib15]. Female contraceptives have been critiqued for their extensive list of side effects while dismissive attitude of general health practitioners when it comes to a contraceptive choice has sparked distrust. On the one hand, such discussions highlight important issues and encourage informed choice; on the other hand, it creates a space for misinformation and skewed experiences getting more representation than the general ones. 
+Birth control availability was a liberating step towards women having full control of their reproduction. However, this liberation started shifting towards new means of constraints by society putting a huge burden on women as a sole responsibility bearers when it comes to pregnancy prevention. Female contraceptives being the most effective birth control means that women have to put up with extensive list of side effects with no equivalent male alternatives. In recent years, health risks associated with hormonal contraceptive usage started being discussed more [1]. Social media plays a significant role in shaping opinions about hormonal contraceptives and in turn their decline in various western countries [2]. Female contraceptives have been critiqued for their extensive list of side effects while dismissive attitude of general health practitioners when it comes to a contraceptive choice has sparked distrust. On the one hand, such discussions highlight important issues and encourage informed choice; on the other hand, it creates a space for misinformation and skewed experiences getting more representation than the general ones. 
 
-Nevertheless, female contraceptives remain being the most reliable way to prevent unwanted pregnancy [reference]. The changes in birth control usage probe a question in how this correlates with further measures to terminate pregnancy. This report will explore female contraceptive trends in Scotland between 2018 and 2023 and look how this trend correlated with pregnancy termination statistics.
+Nevertheless, female contraceptives remain being the most reliable way to prevent unwanted pregnancy [3]. The changes in birth control usage probe a question in how this correlates with further measures to terminate pregnancy. This report will explore female contraceptive trends in Scotland between 2018 and 2023 and look how this trend correlated with pregnancy termination statistics.
 
 
 ### AIMS of this report:
 
 1. Is there a national trend in female contraceptives in Scotland between year 2018 and 2023
-2. Do the trends of short-term (oral, injections, and implants) and long-term (IUD and coil) contraceptives differ;
-3. Is there a correlation between contraceptive trend and pregnancy termination trend nation wide and within health boards.
-
+2. Is this trend maintained within health boards;
+3. Is there a correlation between contraceptive trend and pregnancy termination trend.
 
 
 ```{r setup, include=FALSE}
@@ -36,25 +35,29 @@ library(patchwork)
 
 ## Data used in the report
 
-Abortion and prescription data used in this report has been obtained from [Public Health Scotland](https://www.opendata.nhs.scot/dataset). For showing the contraceptive usage trend in 6 years all age data was used that includes females under 20 to females over 40. 
+Abortion and prescription data used in this report has been obtained from [Public Health Scotland](https://www.opendata.nhs.scot/dataset). For showing the contraceptive usage trend in 8 years all age data was used that includes females under 20 to females over 40. 
 
-To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 of women in the health board in accordance to 2022 Cencus data. Only women of biological reproductive age were included as they are the most likely to be included in the statistic. The chosen respoductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [https://academic.oup.com/hropen/article/2022/2/hoac005/6527206#356986178].
+To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 of women in the health board in accordance to (2022 Cencus data)[https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml]. While the total population might change over the years we are expecting that he change wont be significant to impact the overall trends. Only women of biological reproductive age were included as the members of this group are the most likely to get pregnant. The chosen reproductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [4].
 
 
 
 ```{r Heatlh board names and population, include=FALSE}
+
+# Health board name and codes selected
 health_boards <- read_csv("https://www.opendata.nhs.scot/dataset/9f942fdb-e59e-44f5-b534-d6e17229cc7b/resource/652ff726-e676-4a20-abda-435b98dd7bdc/download/hb14_hb19.csv") %>% 
   clean_names() %>% 
   select(hb, hb_name)
 
-# Combined Boards for NHS Orkney, NHS Shetland and NHS Western Isles
+# Combined Boards for NHS Orkney, NHS Shetland and NHS Western Isles that represent the Islands group
 other_health_boards <- read_csv("https://www.opendata.nhs.scot/dataset/65402d20-f0f1-4cee-a4f9-a960ca560444/resource/8f0c3067-7b10-44c6-af36-37f87a9e6efa/download/grouped-geography.csv") %>% 
   clean_names() %>%
   rename(hb_name = "grouped_geography_name", hb = "grouped_geography") %>% 
   select(hb_name, hb)
 
+# add Islands heath board to the main list
 health_boards <- bind_rows(health_boards, other_health_boards)
 
+# get health board population data and extract female of reproductive age population numbers for each health board 
 health_board_population <- read_csv(here( "data", "UV103_age_health_board_census.csv"), skip = 10) %>% 
   clean_names() %>% 
   rename(hb_name = "health_board_area_2019") %>% 
@@ -66,13 +69,13 @@ health_board_population <- read_csv(here( "data", "UV103_age_health_board_census
 
 boards_to_sum <- c("NHS Orkney", "NHS Shetland", "NHS Western Isles")
 
-# Calculate the population for the target board
+# Calculate the population for the Islands board
 islands_population <- health_board_population %>%
   filter(hb_name %in% boards_to_sum) %>%
   summarise(total_population = sum(female_repro_population, na.rm = TRUE)) %>%
   pull(total_population)
 
-
+# combining health board names and populations removing NHS from Health board name for readibility in plots and adding Islands population to the full dataframe
 health_board_population <- full_join(health_board_population, health_boards, by = "hb_name") %>% 
   mutate(hb_name = factor(hb_name, labels = c(
   "NHS Ayrshire and Arran" = "Ayrshire and Arran",
@@ -109,6 +112,7 @@ abortion_data <- read_csv("https://www.opendata.nhs.scot/dataset/d684d4a5-f7ae-4
   filter(age_group == "All Ages") %>% 
   select(year, hb, numberof_terminations)
 
+# abortion data joined to health board names and populations, number of abortion per 1000 women added
 abortion_data <- left_join(abortion_data, health_board_population, by = "hb")  %>% 
   mutate(abortion_per_1000_women = numberof_terminations/female_repro_population * 1000) %>% 
   filter(!is.na(hb_name))
@@ -118,7 +122,6 @@ abortion_data <- left_join(abortion_data, health_board_population, by = "hb")  %
 
 Prescription data has been filtered based on BNF item code. Codes beginning with 0703 and 21040 were selected as representing contraceptive medication and devices. 
 
-As for pregnancy termination data, number of items count was normalised per 1000 of women of reproductive age in the health board based on 2022 Cencus data. 
 
 ```{r URLs for prescription data, include=FALSE}
 #prescription data between 2018 and 2023 in a names vector
@@ -263,23 +266,30 @@ name <- names(prescription_data_urls)[which(prescription_data_urls == url)]
 assign(name, data_filtered, envir = .GlobalEnv) 
 }
 
+# apply the outlined function to all data urls
 lapply(prescription_data_urls, read_and_clean)
 ```
 
 ```{r Combine all prescription datases, include=FALSE}
 #sum the number of items paid for by health board
 add_year <- function(url) {
+  
+  #get the name of the url form the named list and turn that name into object
   name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
+  
+  # get the selected object from the environment
   data <- get(name) 
+  
+  # add a column with year by extracting the number from the name
   data <- data %>% 
     add_column(year = as.numeric(str_extract_all(name, "\\d+")))
   
-  
+  #create a new object for each modified dataframe
   object_name <- paste(name, "sum", sep = "_")
   assign(object_name, data, envir = .GlobalEnv) 
 }
 
-
+# apply the above function to all dataframes read from urls
 lapply(prescription_data_urls, add_year)
 
 #join full prescription dataset with healh board names and populations of women of reproductive age
@@ -288,7 +298,7 @@ full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_p
   
 ```
 
-The data was then further devided into long term contraceptives (IUD, coil, and implant) lasting several years and short term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to short-term cathegory. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
+The data was then further divided into long term contraceptives (IUD, coil, and implant) lasting several years and short term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to short-term category. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
 
 ```{r filter datasets to create long term and short term contraception datasets, include=FALSE}
 long_term_contraception <- full_prescirption_dataset %>% 
@@ -310,14 +320,13 @@ short_term_contraception <- full_prescirption_dataset %>%
 
 ### Contraceptives trends
 
-It has been shown that over the past 8 years there has been a decline in combined oral contraceptives being prescribed while the progesterone only pill prescriptions increased [https://srh.bmj.com/content/early/2024/05/24/bmjsrh-2024-202387]. While it shows that women preference might be shifting away from estrogen containing products it doesn't tell much about the overall trend in contraceptive usage. 
+It has been shown that over the past 8 years there has been a decline in combined oral contraceptives being prescribed while the progesterone only pill prescriptions increased [5]. While it shows that women preference might be shifting away from estrogen containing products it doesn't tell much about the overall trend in contraceptive usage. 
 
-Figure 1 shows that there is a nationwide decline in birth control usage. There is a steep drop from pre-Covid to Covid year. It is hard to day whether the decline from year 2022 to 2023 is still due to Covid or if it represents a general trend of decline. Seeing that there was a downwards trend over pre-Covid years it could be suspected that this trend is continuing.
+Figure 1 shows that there is a nationwide decline in birth control usage. There is a steep drop from pre-Covid to Covid year. It is hard to tell whether the decline from year 2022 to 2023 is still due to Covid or if it represents a general trend. Seeing that there was a downwards trend over pre-Covid years it could be suspected that this trend is continuing untill the present.
 
-Interestingly, there is a sharp rise in contraceptive use in 2019.
 
 ```{r Figure 1, echo = FALSE, fig.cap='Fig 1. Gross prescription of contraceptives between 2016 and 2023'}
-full_prescirption_dataset %>% 
+total <- full_prescirption_dataset %>% 
   group_by(year) %>% 
   summarise(sum=sum(number_of_paid_items)) %>% 
   ggplot(aes(y=sum, x=year)) +
@@ -370,6 +379,7 @@ ggplot() +
   annotate(geom="text", x=2021, y=1, 
              label="COVID period", colour = "#71797E") 
 
+
 ```
 
 ### Contraceptive and pregnancy termination trends 
@@ -421,11 +431,8 @@ combined_data %>%
   ) +
   scale_colour_manual(values = color_vector) 
 
-  
 
 
-lm <- lm(data = combined_data, abortion_per_1000_women ~ contraceptives_per_1000_women)
-summary(lm)
   
 ```
 
@@ -477,5 +484,17 @@ h
 
 ```
 
+## Future work
 
+## References
+
+1. Guen ML, Schantz C, Régnier-Loilier A, Rochebrochard E de L. Reasons for rejecting hormonal contraception in Western countries: A systematic review. Social Science & Medicine. 2021;284:114247. 
+
+2. Schneider-Kamp A, Takhar J. Interrogating the pill: Rising distrust and the reshaping of health risk perceptions in the social media age. Social Science & Medicine. 2023;331:116081. 
+
+3. Diana Mansour PI, Gemzell-Danielsson K. Efficacy of contraceptive methods: A review of the literature. The European Journal of Contraception & Reproductive Health Care. Taylor & Francis; 2010;15(1):4–16. PMID: 20136566
+
+4. Nabhan AF, Mburu G, Elshafeey F, Magdi R, Kamel M, Elshebiny M, Abuelnaga YG, Ghonim M, Abdelhamid MH, Ghonim M, Eid P, Morsy A, Nasser M, Abdelwahab N, Elhayatmy F, Hussein AA, Elgabaly N, Sawires E, Tarkhan Y, Doas Y, Farrag N, Amir A, Gobran MF, Maged M, Abdulhady M, Sherif Y, Dyab M, Kiarie J. Women’s reproductive span: a systematic scoping review. Human Reproduction Open. 2022 Feb;2022(2):hoac005. 
+
+5. Johnson-Hall E. Oral contraception prescribing trends in Scottish general practices between 2016 and 2023. BMJ Sexual & Reproductive Health [Internet]. British Medical Journal Publishing Group; 2024; Available from: https://srh.bmj.com/content/early/2024/05/24/bmjsrh-2024-202387
 
