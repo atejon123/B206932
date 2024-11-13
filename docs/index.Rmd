@@ -3,18 +3,19 @@ title: "Assesment"
 output: html_document
 date: "2024-11-01"
 ---
-# Pregnancy termination and contraception trend over 8 year period in Scotland
+# Pregnancy termination and contraception trend between 2016 and 2023 in Scotland
+---
 
-Birth control availability was a liberating step towards women having full control of their reproduction. However, this liberation started shifting towards new means of constraints by society putting a huge burden on women as a sole responsibility bearers when it comes to pregnancy prevention. Female contraceptives being the most effective birth control means that women have to put up with extensive list of side effects with no equivalent male alternatives. In recent years, health risks associated with hormonal contraceptive usage started being discussed more [1]. Social media plays a significant role in shaping opinions about hormonal contraceptives and in turn their decline in various western countries [2]. Female contraceptives have been critiqued for their extensive list of side effects while dismissive attitude of general health practitioners when it comes to a contraceptive choice has sparked distrust. On the one hand, such discussions highlight important issues and encourage informed choice; on the other hand, it creates a space for misinformation and skewed experiences getting more representation than the general ones. 
+Birth control availability was a liberating step towards women having full control of their reproduction. However, this liberation started shifting towards new means of constraints by society putting a huge burden on women as sole responsibility bearers when it comes to pregnancy prevention. Female contraceptives being the most effective birth control means that women have to put up with an extensive list of side effects with no equivalent male alternatives. In recent years, health risks associated with hormonal contraceptive usage started being discussed more [1]. Social media plays a significant role in shaping opinions about hormonal contraceptives and in turn their decline in various Western countries [2]. Female contraceptives have been critiqued for their extensive list of side effects. In contrast, the dismissive attitude of general health practitioners when it comes to contraceptive choice has sparked distrust. On the one hand, such discussions highlight important issues and encourage informed choice; on the other hand, they create a space for misinformation and skewed experiences getting more representation than the general ones.
 
-Nevertheless, female contraceptives remain being the most reliable way to prevent unwanted pregnancy [3]. The changes in birth control usage probe a question in how this correlates with further measures to terminate pregnancy. This report will explore female contraceptive trends in Scotland between 2018 and 2023 and look how this trend correlated with pregnancy termination statistics.
+Nevertheless, female contraceptives remain the most reliable way to prevent unwanted pregnancy [3]. The changes in birth control usage probe the question of how this correlates with further measures to terminate pregnancy. This report will explore female contraceptive trends in Scotland between 2018 and 2023 and look at how this trend correlated with pregnancy termination statistics.
 
 
 ### AIMS of this report:
 
-1. Is there a national trend in female contraceptives in Scotland between year 2018 and 2023
-2. Is this trend maintained within health boards;
-3. Is there a correlation between contraceptive trend and pregnancy termination trend.
+1. Is there a national trend in female contraceptives in Scotland between 2018 and 2023?
+2. Is this trend maintained within health boards?
+3. Is there a correlation between contraceptive trends and pregnancy termination trends?
 
 
 ```{r setup, include=FALSE}
@@ -35,10 +36,15 @@ library(patchwork)
 
 ## Data used in the report
 
-Abortion and prescription data used in this report has been obtained from [Public Health Scotland](https://www.opendata.nhs.scot/dataset). For showing the contraceptive usage trend in 8 years all age data was used that includes females under 20 to females over 40. 
+Abortion and prescription data used in this report has been obtained from [Public Health Scotland](https://www.opendata.nhs.scot/dataset). For showing the contraceptive usage trend in 8 years all age data was used that includes females under 20 to females over 40.
 
-To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 of women in the health board in accordance to (2022 Cencus data)[https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml]. While the total population might change over the years we are expecting that he change wont be significant to impact the overall trends. Only women of biological reproductive age were included as the members of this group are the most likely to get pregnant. The chosen reproductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [4].
+To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 women in the health board per [2022 Cencus data](https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml). While the total population might change over the years we are expecting that the change won't be significant to impact the overall trends. Only women of biological reproductive age were included as the members of this group were the most likely to get pregnant. The chosen reproductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [4].
 
+Prescription data has been filtered based on the BNF item code. Codes beginning with 0703 and 21040 were selected as representing contraceptive medication and devices.
+
+The data was then further divided into long-term contraceptives (IUD, coil, and implant) lasting several years and short-term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to the short-term category. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
+
+We are assuming that there is a direct link between contraceptive dispensation and usage; therefore, in some parts of the report, the dispensation data is referred to as usage data.
 
 
 ```{r Heatlh board names and population, include=FALSE}
@@ -120,7 +126,7 @@ abortion_data <- left_join(abortion_data, health_board_population, by = "hb")  %
 
 ```
 
-Prescription data has been filtered based on BNF item code. Codes beginning with 0703 and 21040 were selected as representing contraceptive medication and devices. 
+
 
 
 ```{r URLs for prescription data, include=FALSE}
@@ -298,9 +304,7 @@ full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_p
   
 ```
 
-The data was then further divided into long term contraceptives (IUD, coil, and implant) lasting several years and short term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to short-term category. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison. 
 
-We are assuming that there is a direct link between contraceptives dispensation and usage; therefore, in some parts of the report the dispensation data is refereed to as usage data.
 
 ```{r filter datasets to create long term and short term contraception datasets, include=FALSE}
 long_term_contraception <- full_prescirption_dataset %>% 
@@ -347,18 +351,19 @@ combined_data <- left_join(abortion_data_hb, contraception_data_hb, by = c("year
 
 ## Results
 
-### Contraceptives trends
+### Contraceptives Trends
 
-It has been shown that over the past 8 years there has been a decline in combined oral contraceptives being prescribed while the progesterone only pill prescriptions increased [5]. While it shows that women preference might be shifting away from estrogen containing products it doesn't tell much about the overall trend in contraceptive usage. 
+It has been shown that over the past 8 years, there has been a decline in combined oral contraceptives being prescribed while the progesterone-only pill prescriptions increased [5]. While it shows that women's preference might be shifting away from estrogen-containing products it doesn’t tell much about the overall trend in contraceptive usage.
 
-Figure 1 shows values normalised to 2016 for long-term and short-term contraceptives. There seems to be a nation wide decline in birth control usage. It can be seen that short-term contraception is on a consistent decline over the past 8 years. Covid doesn't seem to have had significant impact on these prescriptions. However, Cocid hindered access to long-term contraceptives. That is likely because application of intravaginal devices and implants require medical professionals and during Covid clinics' had to focus their resources on emergency medical care. Overall, the rise in contraceptive use in 2019 seems to be influenced by both types of contraceptives.
+Figure 1 shows values normalised to 2016 for long-term and short-term contraceptives. There seems to be a nationwide decline in birth control usage. It can be seen that short-term contraception has been on a consistent decline over the past 8 years. Covid doesn’t seem to have had a significant impact on these prescriptions. However, Cocid hindered access to long-term contraceptives. That is likely because the application of intravaginal devices and implants requires medical professionals and during Covid clinics’ had to focus their resources on emergency medical care. Overall, the rise in contraceptive use in 2019 seems to be influenced by both types of contraceptives.
+
 
 
 ```{r Figure 1, echo = FALSE, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives'}
 
-ggplot() +
-  geom_line(data = long_term_contraception_yearly_gross, aes(y = sum, x = year), color = "#6D91F2", linewidth = 2) +
-  geom_line(data = short_term_contraception_yearly_gross, aes(y = sum, x = year), color = "#6DF2A6", linewidth=2) +
+print(ggplot() +
+  geom_line(data = long_term_contraception, aes(y = sum, x = year), color = "#6D91F2", linewidth = 2) +
+  geom_line(data = short_term_contraception, aes(y = sum, x = year), color = "#6DF2A6", linewidth=2) +
   geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
   geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
   theme_classic() +
@@ -372,15 +377,15 @@ ggplot() +
   labs(title = "Normalised prescription of long-term and short-term contraceptives", x = "Year", y = "Normalised value of items dispensed per year") +
   annotate(geom="text", x=2021, y=1, 
            label="COVID period", colour = "#71797E") 
-
+)
 
 ```
 
-### Contraceptive and pregnancy termination trends within NHS Scotland health boards
+### Contraceptive and Pregnancy Termination Trends within NHS Scotland Health Boards
 
-Negative trend in contraceptive usage can be seen across all health boards (Fig. 2). Most of the health boards have very similar use and trend of contraception, except for Lothian and Dumfries and Galloway. While Lothian and Dumfries and Galloway have similar overall trend to other boards, Lothian has significantly lower dispensation of contraceptives while Dumfries and Galloway has significantly higher. Further analysis is needed to better understand the reasons behind these differences. On average, 736.05 items of contraceptives were dispensed per 1000 in each Health Board in 2016. This number dropped to 626.76 in 2023. While all health boards showcase a decline in contraceptive use, Grampian, Islands, and Lanarkshire had the sharpest decrease from 2016 to 2023. 
+A negative trend in contraceptive usage can be seen across all health boards (Fig. 2). Most of the health boards have very similar use and trends of contraception, except for Lothian and Dumfries and Galloway. Lothian and Dumfries and Galloway have different contraceptive rates to other boards. Lothian has a significantly lower dispensation of contraceptives, while Dumfries and Galloway has significantly higher. Further analysis is needed to better understand the reasons behind these differences. On average, 736.05 items of contraceptives were dispensed per 1000 in each Health Board in 2016. This number dropped to 626.76 in 2023. While all health boards showcase a decline in contraceptive use, Grampian, Islands, and Lanarkshire had the sharpest decrease from 2016 to 2023.
 
-Table 1 shows change from 2016 to 2023 in dispensed contraceptives and number of pregnancies terminated for each health board in Scotland. Values higher than the mean are highlighted in red. It can be seen that all health boards experienced increase in number of terminated pregnancies with Lanarkshire having a more than double the averse of an increase.
+Table 1 shows a change from 2016 to 2023 in dispensed contraceptives and number of pregnancies terminated for each health board in Scotland. Values higher than the mean are highlighted in red. It can be seen that all health boards experienced an increase in the number of terminated pregnancies with Lanarkshire having more than double the averse of an increase.
 
 ```{r, echo = FALSE, fig.cap='Fig. 2: Contraceptives prescription in each NHS Scotland health board'}
 
@@ -392,7 +397,7 @@ plot_prescription <- combined_data %>%
 
 color_vector <- setNames(cols25(length(unique(combined_data$hb_name))), unique(combined_data$hb_name))
 
-ggplot() +
+print(ggplot() +
   geom_line(data=plot_prescription , aes(group=hb_name1, y = contraceptives_per_1000_women, x = year), color="grey", size=0.5, alpha=0.5) +
   geom_line(data = combined_data, aes(group = hb_name, color=hb_name, y = contraceptives_per_1000_women, x = year), size=1.2 ) +
   geom_smooth(method = "lm", se = FALSE) +
@@ -413,7 +418,7 @@ ggplot() +
   facet_wrap(~hb_name, nrow = 3, 
              labeller = label_wrap_gen(18)) +
   scale_colour_manual(values = color_vector) 
-
+)
 # mean of contraceptive items in 2016
 contraceptives_mean_2016 <- combined_data %>% 
   filter(year == 2016) %>% 
@@ -440,7 +445,7 @@ combined_data_2016_2023_diff <- combined_data %>%
   summarise(diff_contr = contraceptives_per_1000_women[year == 2023] - contraceptives_per_1000_women[year == 2016], diff_abor = abortion_per_1000_women[year == 2023] - abortion_per_1000_women[year == 2016])
 
 
-
+print(
 combined_data_2016_2023_diff %>% 
   gt() %>% 
   tab_header(title = md("**Table 1.** Change in Abortion and Contraceptives Prescription Rate Across Scotland Health Boards from 2016 to 2023")) %>% 
@@ -464,13 +469,12 @@ combined_data_2016_2023_diff %>%
       rows = `diff_contr` < (-109.29)
     ),
     style = list(cell_text(color = 'red')))
-
+)
 ```
 
-### Contraceptive and pregnancy termination correlation across NHS Scotland Health Boards
+### Contraceptive and Pregnancy Termination Correlation across NHS Scotland Health Boards
 
-With contraceptives dispensation on a decline it begs a question of how this might correlate with pregnancy termination data. Each colored point in Figure 3 represents a data value from a single year, plotted with abortion rates on the y axis and contraceptive use on the x axis. It is evident that there is a relationship between abortion and contraceptives use. Abortion dicreses in all heath boards when contraceptives prescriptions increase. However, several health boards stand out with slightly different rates from other boards. Dumfries and Galloway has been mentioned before as the board with the highest contraceptive consumption. Interestingly, abortion rate in this regions doesn't seem to deviate from the values of the cluster of other boards. On the other hand the Islands have much lower contraceptives use compared to Dumfries and Galloway but have around half of the abortions. Lothian, with the lowes usage of contraceptives doesn't display much higher abortion rates. Therefore, abortion rate and contraceptive usage correlates within health boards but such consensus is not maintained across health boards.
-
+With contraceptive dispensation on a decline, it begs the question of how this might correlate with pregnancy termination data. Each coloured point in Figure 3 represents a data value from a single year, plotted with abortion rates on the y-axis and contraceptive use on the x-axis. There is a relationship between abortion and contraceptive use. Abortion decreases in all health boards when contraceptive prescriptions increase. However, several health boards stand out with slightly different rates from other boards. Dumfries and Galloway has been mentioned before as the board with the highest contraceptive consumption. Interestingly, the abortion rate in this region doesn’t seem to deviate from the values of the cluster of other boards. On the other hand, the Islands have much lower contraceptive use compared to Dumfries and Galloway but have around half of the abortions. Lothian, with the lowest usage of contraceptives, doesn’t display much higher abortion rates. Therefore, abortion rate and contraceptive usage correlate within health boards but such consensus is not maintained across health boards.
 
 
 ```{r, echo=FALSE, fig.cap="Fig 3. Correlation between aboirtion and ocntraception figures in each health board"}
@@ -504,9 +508,10 @@ combined_data %>%
 
 
 
-## Conclusions and future work
+## Conclusions and Future Work
 
-To better understand the changes over the 8 year period discussed in this it is crucial to examine the reasons these changes occur. Decline in contraception use might be a direct outcome of social media portrayal of hormonal contraceptives. However, it is not fully examined what other reasons might encourage people to stop using contraception. This report showcases the negative relationship between contraception use and termination of pregnancy occurrence, however, the outlined relationship is not necessarily fatalistically significant. This needs to be explored further to draw more solid conclusions. The relationship between contraceptive use and number of pregnancy termination procedures might be indirect and influenced by a measure now reflected in a data. Therefore, further analysis is important to understand these trends.  
+To better understand the changes over the 8-year period discussed in this it is crucial to examine the reasons these changes occur. A decline in contraception use might be a direct outcome of social media portrayal of hormonal contraceptives. However, it is not fully examined what other reasons might encourage people to stop using contraception. This report showcases the negative relationship between contraception use and termination of pregnancy occurrence, however, the outlined relationship is not necessarily fatalistically significant. This needs to be explored further to draw more solid conclusions. The relationship between contraceptive use and the number of pregnancy termination procedures might be indirect and influenced by a measure now reflected in the data. Therefore, further analysis is important to understand these trends.
+
 
 ## References
 
