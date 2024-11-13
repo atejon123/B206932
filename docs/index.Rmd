@@ -441,15 +441,16 @@ contraceptives_mean_2023 <- combined_data %>%
 
  
 
-```{r Changes in aboriton and contraception usage from 2016 to 2023, echo=FALSE}
+```{r Changes in aboriton and contraception usage from 2016 to 2023, include=FALSE}
 # get a difference of 2016 and 2023 for each board
 combined_data_2016_2023_diff <- combined_data %>% 
   filter(year %in% c(2016, 2023)) %>%
   group_by(hb_name) %>% 
   summarise(diff_contr = contraceptives_per_1000_women[year == 2023] - contraceptives_per_1000_women[year == 2016], diff_abor = abortion_per_1000_women[year == 2023] - abortion_per_1000_women[year == 2016])
+```
 
 
-
+```{r Changes in aboriton and contraception usage from 2016 to 2023, echo=FALSE, paged.print=TRUE}
 combined_data_2016_2023_diff %>% 
   gt() %>% 
   tab_header(title = md("**Table 1.** Change in Abortion and Contraceptives Prescription Rate Across Scotland Health Boards from 2016 to 2023")) %>% 
