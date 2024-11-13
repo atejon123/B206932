@@ -1,5 +1,5 @@
 ---
-title: "Assesment"
+title: "Assessment"
 output: html_document
 date: "2024-11-01"
 ---
@@ -84,25 +84,25 @@ islands_population <- health_board_population %>%
 # combining health board names and populations removing NHS from Health board name for readibility in plots and adding Islands population to the full dataframe
 health_board_population <- full_join(health_board_population, health_boards, by = "hb_name") %>% 
   mutate(hb_name = factor(hb_name, labels = c(
-  "NHS Ayrshire and Arran" = "Ayrshire and Arran",
-  "NHS Borders" = "Borders",
-  "NHS Dumfries and Galloway" = "Dumfries and Galloway",
-  "NHS Fife" = "Fife",
-  "NHS Forth Valley" = "Forth Valley",
-  "NHS Grampian" = "Grampian",
-  "NHS Greater Glasgow and Clyde" = "Greater Glasgow and Clyde",
-  "NHS Highland" = "Highland",
-  "NHS Island Boards" = "Islands",
-  "NHS Lanarkshire" = "Lanarkshire",
-  "NHS Lothian" = "Lothian",
-  "NHS Orkney" = "Orkney",
-  "NHS Shetland" = "Shetland",
-  "NHS Tayside" = "Tayside",
-  "NHS Western Isles" = "Western Isles"
-))) %>% 
+    "NHS Ayrshire and Arran" = "Ayrshire and Arran",
+    "NHS Borders" = "Borders",
+    "NHS Dumfries and Galloway" = "Dumfries and Galloway",
+    "NHS Fife" = "Fife",
+    "NHS Forth Valley" = "Forth Valley",
+    "NHS Grampian" = "Grampian",
+    "NHS Greater Glasgow and Clyde" = "Greater Glasgow and Clyde",
+    "NHS Highland" = "Highland",
+    "NHS Island Boards" = "Islands",
+    "NHS Lanarkshire" = "Lanarkshire",
+    "NHS Lothian" = "Lothian",
+    "NHS Orkney" = "Orkney",
+    "NHS Shetland" = "Shetland",
+    "NHS Tayside" = "Tayside",
+    "NHS Western Isles" = "Western Isles"
+  ))) %>% 
   mutate(female_repro_population = case_when(hb_name == "Islands" ~ islands_population,
-      TRUE ~ female_repro_population))
-  
+                                             TRUE ~ female_repro_population))
+
 
 
 
@@ -301,7 +301,7 @@ lapply(prescription_data_urls, add_year)
 #join full prescription dataset with healh board names and populations of women of reproductive age
 full_prescirption_dataset <- bind_rows(mget(paste(names(prescription_data_urls), "sum", sep = "_")))
 full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_population, by = "hb") 
-  
+
 ```
 
 
@@ -362,21 +362,25 @@ Figure 1 shows values normalised to 2016 for long-term and short-term contracept
 ```{r Figure 1, echo = FALSE, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives'}
 
 print(ggplot() +
-  geom_line(data = long_term_contraception, aes(y = sum, x = year), color = "#6D91F2", linewidth = 2) +
-  geom_line(data = short_term_contraception, aes(y = sum, x = year), color = "#6DF2A6", linewidth=2) +
-  geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
-  geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
-  theme_classic() +
-  scale_x_continuous(breaks=c(2016:2023)) +
-  theme(plot.title = element_text(size = 13, 
-                                  hjust = 0,
-                                  face = "bold", 
-                                  margin = margin(10,10,10,10)), 
-        axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
-        axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
-  labs(title = "Normalised prescription of long-term and short-term contraceptives", x = "Year", y = "Normalised value of items dispensed per year") +
-  annotate(geom="text", x=2021, y=1, 
-           label="COVID period", colour = "#71797E") 
+        geom_line(data = long_term_contraception, aes(y = sum, x = year, color = "Long-term"), linewidth = 2) +
+        geom_line(data = short_term_contraception, aes(y = sum, x = year, color = "Short-term"), linewidth=2) +
+        geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
+        geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
+        theme_classic() +
+        scale_x_continuous(breaks=c(2016:2023)) +
+        theme(plot.title = element_text(size = 13, 
+                                        hjust = 0,
+                                        face = "bold", 
+                                        margin = margin(10,10,10,10)), 
+              axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
+              axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
+        labs(title = "Normalised prescription of long-term and short-term contraceptives", 
+             x = "Year", 
+             y = "Normalised value of items dispensed per year",
+             colour = "Legend") +
+        annotate(geom="text", x=2021, y=1, 
+                 label="COVID period", colour = "#71797E")  +
+        scale_color_manual(values = c("Long-term" = "#6D91F2", "Short-term" = "#6DF2A6"))
 )
 
 ```
@@ -398,26 +402,26 @@ plot_prescription <- combined_data %>%
 color_vector <- setNames(cols25(length(unique(combined_data$hb_name))), unique(combined_data$hb_name))
 
 print(ggplot() +
-  geom_line(data=plot_prescription , aes(group=hb_name1, y = contraceptives_per_1000_women, x = year), color="grey", size=0.5, alpha=0.5) +
-  geom_line(data = combined_data, aes(group = hb_name, color=hb_name, y = contraceptives_per_1000_women, x = year), size=1.2 ) +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_classic() +
-  theme(plot.title = element_text(size = 13, 
-                                  hjust = 0,
-                                  face = "bold", 
-                                  margin = margin(10,10,10,10)), 
-        axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
-        axis.title.y = element_text(size = 11, margin=margin(0,10,0,0)),
-        legend.position="none",
-        strip.text.x = element_text(
-          size = 10, face = "bold"
-        ), strip.background = element_rect(
-          color=FALSE, fill=FALSE
-        )) +
-  labs(title = "Contraceptive item prescription across NHS Scotland boards", x = "Year", y = "Number of items per 1000 women") +
-  facet_wrap(~hb_name, nrow = 3, 
-             labeller = label_wrap_gen(18)) +
-  scale_colour_manual(values = color_vector) 
+        geom_line(data=plot_prescription , aes(group=hb_name1, y = contraceptives_per_1000_women, x = year), color="grey", size=0.5, alpha=0.5) +
+        geom_line(data = combined_data, aes(group = hb_name, color=hb_name, y = contraceptives_per_1000_women, x = year), size=1.2 ) +
+        geom_smooth(method = "lm", se = FALSE) +
+        theme_classic() +
+        theme(plot.title = element_text(size = 13, 
+                                        hjust = 0,
+                                        face = "bold", 
+                                        margin = margin(10,10,10,10)), 
+              axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
+              axis.title.y = element_text(size = 11, margin=margin(0,10,0,0)),
+              legend.position="none",
+              strip.text.x = element_text(
+                size = 10, face = "bold"
+              ), strip.background = element_rect(
+                color=FALSE, fill=FALSE
+              )) +
+        labs(title = "Contraceptive item prescription across NHS Scotland boards", x = "Year", y = "Number of items per 1000 women") +
+        facet_wrap(~hb_name, nrow = 3, 
+                   labeller = label_wrap_gen(18)) +
+        scale_colour_manual(values = color_vector) 
 )
 # mean of contraceptive items in 2016
 contraceptives_mean_2016 <- combined_data %>% 
@@ -445,7 +449,7 @@ combined_data_2016_2023_diff <- combined_data %>%
   summarise(diff_contr = contraceptives_per_1000_women[year == 2023] - contraceptives_per_1000_women[year == 2016], diff_abor = abortion_per_1000_women[year == 2023] - abortion_per_1000_women[year == 2016])
 
 
-print(
+
 combined_data_2016_2023_diff %>% 
   gt() %>% 
   tab_header(title = md("**Table 1.** Change in Abortion and Contraceptives Prescription Rate Across Scotland Health Boards from 2016 to 2023")) %>% 
@@ -469,7 +473,7 @@ combined_data_2016_2023_diff %>%
       rows = `diff_contr` < (-109.29)
     ),
     style = list(cell_text(color = 'red')))
-)
+
 ```
 
 ### Contraceptive and Pregnancy Termination Correlation across NHS Scotland Health Boards
@@ -481,7 +485,7 @@ With contraceptive dispensation on a decline, it begs the question of how this m
 
 
 
-
+print(
 combined_data %>% 
   ggplot(aes(x = contraceptives_per_1000_women, y = abortion_per_1000_women, colour = hb_name)) +
   geom_point(size = 1) +
@@ -499,7 +503,7 @@ combined_data %>%
     y = "Total Abortion per year" , colour = "Health Boards"
   ) +
   scale_colour_manual(values = color_vector) 
-
+)
 
 
   
