@@ -432,7 +432,7 @@ contraceptives_mean_2023 <- combined_data %>%
 
  
 
-```{r Changes in aboriton and contraception usage from 2016 to 2023}
+```{r Changes in aboriton and contraception usage from 2016 to 2023, echo=FALSE}
 # get a difference of 2016 and 2023 for each board
 combined_data_2016_2023_diff <- combined_data %>% 
   filter(year %in% c(2016, 2023)) %>%
