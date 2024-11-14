@@ -19,7 +19,7 @@ Nevertheless, female contraceptives remain the most reliable way to prevent unwa
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
