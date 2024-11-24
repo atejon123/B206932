@@ -214,7 +214,7 @@ read_and_clean <- function(url) {
   name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
   assign(name, data_filtered, envir = .GlobalEnv) 
 }
-# apply the outlined function to all data urls
+# apply the outlined function to all data urls in named list or URLs -> prescription_data_urls
 lapply(prescription_data_urls, read_and_clean)
 ```
 
@@ -232,7 +232,7 @@ contraception_data_hb <- full_prescirption_dataset %>%
   summarise(total_contraceptives_per_hb=sum(number_of_paid_items)) %>% 
   select(-female_repro_population)
 # total contraceptives for all health boards representing Islands health board for each year 
-boards_to_sum <- c("Orkney", "Shetland", "Western Isles")
+boards_to_sum <- str_remove(boards_to_sum, "NHS ")
 
 islands_contraceptives <- full_prescirption_dataset %>% 
   filter(hb_name %in% boards_to_sum) %>% 
@@ -257,6 +257,12 @@ Figure 1 shows values normalised to 2016 for long-term and short-term contracept
 Because of the strong COVID-19 effect on long-term contraceptives, it is difficult to see its overall trend. In years before the COVID-19 pandemic, there was a downward trend from 2016 to 2018 but contraception usage spiked in 2019 for both types of contraceptives. It is unclear whether long-term contraceptive use would have continued to increase if the pandemic didn't happen. However, it doesn't look like the decline in short-term contraceptive usage can be explained by the shift towards long-term options since trends for both types are very similar outside of the COVID-19 pandemic period. This trend might be explained by so-called "hormonophobia" [1]. Most of the female contraceptives contain hormones and people, in recent years, are increasingly worried about their side effects.
 
 ```{r Figure 1, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives'}
+base_theme <- theme_classic() +
+  theme(plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10, 10, 10, 10)),
+        axis.title.x = element_text(size = 11, margin = margin(10, 0, 0, 0)),
+        axis.title.y = element_text(size = 11, margin = margin(0, 10, 0, 0))
+  )
+
 full_prescirption_dataset %>%
   group_by(year, type) %>% 
   summarise(total = sum(number_of_paid_items, na.rm = TRUE), groups = 'drop') %>%
@@ -266,11 +272,8 @@ full_prescirption_dataset %>%
         geom_line(linewidth = 2) +
         geom_point(size = 3) +
         geom_vline(xintercept = c(2020,2022), color="grey", linewidth=.5, linetype = "dashed") +
-        theme_classic() +
         scale_x_continuous(breaks=c(2016:2023)) +
-        theme(plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10,10,10,10)), 
-              axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
-              axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
+        base_theme +
         labs(title = "Normalised prescription of long-term and short-term contraceptives", x = "Year", y = "Normalised value of items dispensed per year", colour = "Legend") +
         annotate(geom="text", x=2021, y=1, label="COVID period", colour = "#71797E")
 ```
@@ -287,21 +290,18 @@ plot_prescription <- combined_data %>%
 
 color_vector <- setNames(cols25(length(unique(combined_data$hb_name))), unique(combined_data$hb_name))
 
-print(ggplot() +
+ggplot() +
         geom_line(data=plot_prescription , aes(group=hb_name1, y = contraceptives_per_1000_women, x = year), color="grey", linewidth=0.5, alpha=0.5) +
         geom_line(data = combined_data, aes(color = hb_name, y = contraceptives_per_1000_women, x = year), linewidth=1.2 ) +
         geom_point(data = combined_data, aes(color = hb_name, y = contraceptives_per_1000_women, x = year), size=1.2 ) +
-        theme_classic() +
-        theme(plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10,10,10,10)), 
-              axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
-              axis.title.y = element_text(size = 11, margin=margin(0,10,0,0)),
-              legend.position="none",
+        base_theme +
+        theme(legend.position="none",
               strip.text.x = element_text(size = 10, face = "bold"), 
               strip.background = element_rect(color=NA, fill=NA)) +
         labs(title = "Contraceptive item prescription across NHS Scotland boards", x = "Year", y = "Number of items per 1000 women") +
         facet_wrap(~hb_name, nrow = 3, labeller = label_wrap_gen(18)) +
         scale_colour_manual(values = color_vector) 
-)
+
 ```
 
 
@@ -341,12 +341,7 @@ Each coloured point in Figure 3 represents a data value from a single year, plot
     geom_point(size = 1) +
     geom_smooth(method = "lm", se = FALSE, aes(colour = hb_name)) +
     theme_classic() +
-    theme(
-      plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10, 10, 10, 10)),
-      axis.title.x = element_text(size = 11, margin = margin(10, 0, 0, 0)), 
-      axis.title.y = element_text(size = 11, margin = margin(0, 10, 0, 0)),
-      strip.text.x = element_text(size = 10, face = "bold")
-    ) +
+    base_theme +
     labs( title = "Contraceptives and Abortion Trends between 2016 and 2023", x = "Total Contraceptives per year", y = "Total Abortion per year", colour = "Health Boards"
     ) +
     scale_colour_manual(values = color_vector) 
