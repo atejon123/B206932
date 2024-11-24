@@ -488,1541 +488,6 @@ assign(name, data_filtered, envir = .GlobalEnv)
 }
 # apply the outlined function to all data urls
 lapply(prescription_data_urls, read_and_clean)</code></pre>
-<pre><code>## $dec_2023
-## # A tibble: 12,181 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BPAAAC                   19 S08000015  2023
-##  2 0703010E0BIAAAB                    1 S08000015  2023
-##  3 0703010F0BQAAAA                    1 S08000015  2023
-##  4 0703022P0BCAAAA                    1 S08000015  2023
-##  5 0703021N0BCAAAA                    1 S08000015  2023
-##  6 0703022M0BBABAB                    3 S08000015  2023
-##  7 0703022M0BDAAAC                    3 S08000015  2023
-##  8 0703021Q0BDAAAA                    1 S08000015  2023
-##  9 0703010G0BGAAAC                    1 S08000015  2023
-## 10 0703010G0BGAAAC                    1 S08000015  2023
-## # ℹ 12,171 more rows
-## 
-## $nov_2023
-## # A tibble: 13,160 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BNAAAC                    2 S08000015  2023
-##  2 0703010F0BPAAAC                   19 S08000015  2023
-##  3 0703010E0BIAAAB                    1 S08000015  2023
-##  4 0703022P0BCAAAA                    1 S08000015  2023
-##  5 0703010F0BFAAAC                    1 S08000015  2023
-##  6 0703022M0BBABAB                    2 S08000015  2023
-##  7 0703022M0BBABAB                    4 S08000015  2023
-##  8 0703022M0BDAAAC                    2 S08000015  2023
-##  9 0703022M0BDAAAC                    1 S08000015  2023
-## 10 0703021Q0BDAAAA                    3 S08000015  2023
-## # ℹ 13,150 more rows
-## 
-## $oct_2023
-## # A tibble: 12,972 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BPAAAC                   12 S08000015  2023
-##  2 0703022P0BCAAAA                    1 S08000015  2023
-##  3 0703021N0BCAAAA                    2 S08000015  2023
-##  4 0703022M0BBABAB                    4 S08000015  2023
-##  5 0703022M0BBABAB                    4 S08000015  2023
-##  6 0703022M0BDAAAC                    1 S08000015  2023
-##  7 0703021Q0BDAAAA                    1 S08000015  2023
-##  8 0703010F0BLAAAJ                    3 S08000015  2023
-##  9 0703010E0BDAAAC                    1 S08000015  2023
-## 10 0703021Q0AAAAAA                   32 S08000015  2023
-## # ℹ 12,962 more rows
-## 
-## $sep_2023
-## # A tibble: 12,379 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BNAAAC                    1 S08000015  2023
-##  2 0703010F0BPAAAC                   21 S08000015  2023
-##  3 0703010E0BIAAAB                    1 S08000015  2023
-##  4 0703010F0BQAAAA                    1 S08000015  2023
-##  5 0703022P0BCAAAA                    2 S08000015  2023
-##  6 0703010F0BFAAAC                    1 S08000015  2023
-##  7 0703022M0BBABAB                    5 S08000015  2023
-##  8 0703022M0BDAAAC                    3 S08000015  2023
-##  9 0703010F0BEAAAC                    1 S08000015  2023
-## 10 0703021Q0AAAAAA                   24 S08000015  2023
-## # ℹ 12,369 more rows
-## 
-## $aug_2023
-## # A tibble: 13,275 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BNAAAC                    2 S08000015  2023
-##  2 0703010F0BPAAAC                   22 S08000015  2023
-##  3 0703010E0BIAAAB                    1 S08000015  2023
-##  4 0703022P0BCAAAA                    2 S08000015  2023
-##  5 0703021N0BCAAAA                    3 S08000015  2023
-##  6 0703022M0BBABAB                    3 S08000015  2023
-##  7 0703022M0BBABAB                    1 S08000015  2023
-##  8 0703022M0BDAAAC                    2 S08000015  2023
-##  9 0703022M0BDAAAC                    1 S08000015  2023
-## 10 0703021Q0BDAAAA                    2 S08000015  2023
-## # ℹ 13,265 more rows
-## 
-## $jul_2023
-## # A tibble: 12,491 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BNAAAC                    1 S08000015  2023
-##  2 0703010F0BPAAAC                   21 S08000015  2023
-##  3 0703010E0BIAAAB                    2 S08000015  2023
-##  4 0703010F0BQAAAA                    1 S08000015  2023
-##  5 0703022M0BBABAB                    4 S08000015  2023
-##  6 0703022M0BBABAB                    3 S08000015  2023
-##  7 0703022M0BDAAAC                    3 S08000015  2023
-##  8 0703021Q0BDAAAA                    2 S08000015  2023
-##  9 0703010G0BGAAAC                    1 S08000015  2023
-## 10 0703010G0BGAAAC                    1 S08000015  2023
-## # ℹ 12,481 more rows
-## 
-## $jun_2023
-## # A tibble: 13,026 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BPAAAC                   12 S08000015  2023
-##  2 0703010F0BQAAAA                    1 S08000015  2023
-##  3 0703022P0BCAAAA                    1 S08000015  2023
-##  4 0703021N0BCAAAA                    1 S08000015  2023
-##  5 0703022M0BBABAB                    1 S08000015  2023
-##  6 0703022M0BBABAB                    7 S08000015  2023
-##  7 0703021Q0BFAAAA                    1 S08000015  2023
-##  8 0703022M0BDAAAC                    4 S08000015  2023
-##  9 0703022M0BDAAAC                    1 S08000015  2023
-## 10 0703010G0BGAAAC                    2 S08000015  2023
-## # ℹ 13,016 more rows
-## 
-## $may_2023
-## # A tibble: 13,279 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BPAAAC                   14 S08000015  2023
-##  2 0703010E0BIAAAB                    1 S08000015  2023
-##  3 0703010F0BQAAAA                    1 S08000015  2023
-##  4 0703022P0BCAAAA                    4 S08000015  2023
-##  5 0703021N0BCAAAA                    1 S08000015  2023
-##  6 0703022M0BBABAB                    5 S08000015  2023
-##  7 0703022M0BBABAB                    1 S08000015  2023
-##  8 0703021Q0BDAAAA                    1 S08000015  2023
-##  9 0703010G0BGAAAC                    2 S08000015  2023
-## 10 0703010E0BCAAAB                    1 S08000015  2023
-## # ℹ 13,269 more rows
-## 
-## $apr_2023
-## # A tibble: 12,064 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2023
-##  2 0703010F0BLAAAJ                    1 S08000015  2023
-##  3 0703010F0BNAAAC                    1 S08000015  2023
-##  4 0703010F0BPAAAC                   24 S08000015  2023
-##  5 0703010F0BQAAAA                    1 S08000015  2023
-##  6 0703010G0BGAAAC                    3 S08000015  2023
-##  7 0703021N0BCAAAA                    1 S08000015  2023
-##  8 0703021Q0AAAAAA                   31 S08000015  2023
-##  9 0703021Q0BDAAAA                    2 S08000015  2023
-## 10 0703022M0BBABAB                    4 S08000015  2023
-## # ℹ 12,054 more rows
-## 
-## $mar_2023
-## # A tibble: 12,814 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2023
-##  2 0703010E0BIAAAB                    3 S08000015  2023
-##  3 0703010F0BEAAAC                    2 S08000015  2023
-##  4 0703010F0BLAAAJ                    1 S08000015  2023
-##  5 0703010F0BPAAAC                   15 S08000015  2023
-##  6 0703010F0BVAAAJ                    1 S08000015  2023
-##  7 0703010G0BGAAAC                    3 S08000015  2023
-##  8 0703010G0BGAAAC                    1 S08000015  2023
-##  9 0703021N0BCAAAA                    1 S08000015  2023
-## 10 0703021N0BCAAAA                    1 S08000015  2023
-## # ℹ 12,804 more rows
-## 
-## $feb_2023
-## # A tibble: 12,309 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BDAAAC                    1 S08000015  2023
-##  2 0703010F0BEABAH                    1 S08000015  2023
-##  3 0703010F0BFAAAC                    1 S08000015  2023
-##  4 0703010F0BLAAAJ                    1 S08000015  2023
-##  5 0703010F0BPAAAC                   16 S08000015  2023
-##  6 0703010F0BQAAAA                    2 S08000015  2023
-##  7 0703010F0BVAAAJ                    1 S08000015  2023
-##  8 0703021N0BCAAAA                    1 S08000015  2023
-##  9 0703021Q0AAAAAA                   23 S08000015  2023
-## 10 0703021Q0BDAAAA                    3 S08000015  2023
-## # ℹ 12,299 more rows
-## 
-## $jan_2023
-## # A tibble: 12,983 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2023
-##  2 0703010F0BEAAAC                    2 S08000015  2023
-##  3 0703010F0BEAAAC                    1 S08000015  2023
-##  4 0703010F0BNAAAC                    2 S08000015  2023
-##  5 0703010F0BPAAAC                    9 S08000015  2023
-##  6 0703010F0BVAAAJ                    1 S08000015  2023
-##  7 0703021N0BCAAAA                    1 S08000015  2023
-##  8 0703021Q0AAAAAA                   28 S08000015  2023
-##  9 0703021Q0BDAAAA                    1 S08000015  2023
-## 10 0703022M0BBABAB                    1 S08000015  2023
-## # ℹ 12,973 more rows
-## 
-## $jan_2022
-## # A tibble: 12,564 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2022
-##  2 0703010E0BIAAAB                    1 S08000015  2022
-##  3 0703010F0BEAAAC                    2 S08000015  2022
-##  4 0703010F0BFAAAC                    1 S08000015  2022
-##  5 0703010F0BLAAAJ                    2 S08000015  2022
-##  6 0703010F0BNAAAC                    1 S08000015  2022
-##  7 0703010F0BPAAAC                   13 S08000015  2022
-##  8 0703010G0BGAAAC                    2 S08000015  2022
-##  9 0703021N0BCAAAA                    1 S08000015  2022
-## 10 0703021N0BCAAAA                    2 S08000015  2022
-## # ℹ 12,554 more rows
-## 
-## $feb_2022
-## # A tibble: 12,278 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2022
-##  2 0703010E0BIAAAB                    1 S08000015  2022
-##  3 0703010F0BEAAAC                    3 S08000015  2022
-##  4 0703010F0BEABAH                    1 S08000015  2022
-##  5 0703010F0BPAAAC                   15 S08000015  2022
-##  6 0703010G0BGAAAC                    1 S08000015  2022
-##  7 0703021N0BCAAAA                    1 S08000015  2022
-##  8 0703021Q0AAAAAA                   20 S08000015  2022
-##  9 0703021Q0BBAAAA                    1 S08000015  2022
-## 10 0703021Q0BDAAAA                    3 S08000015  2022
-## # ℹ 12,268 more rows
-## 
-## $mar_2022
-## # A tibble: 13,099 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2022
-##  2 0703010E0BIAAAB                    1 S08000015  2022
-##  3 0703010E0BIAAAB                    1 S08000015  2022
-##  4 0703010F0BEAAAC                    1 S08000015  2022
-##  5 0703010F0BLAAAJ                    1 S08000015  2022
-##  6 0703010F0BNAAAC                    1 S08000015  2022
-##  7 0703010F0BPAAAC                   16 S08000015  2022
-##  8 0703010F0BQAAAA                    2 S08000015  2022
-##  9 0703010G0BGAAAC                    2 S08000015  2022
-## 10 0703010G0BGAAAC                    1 S08000015  2022
-## # ℹ 13,089 more rows
-## 
-## $apr_2022
-## # A tibble: 12,531 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2022
-##  2 0703010E0BDAAAC                    1 S08000015  2022
-##  3 0703010E0BGAAAE                    1 S08000015  2022
-##  4 0703010E0BGAAAE                    1 S08000015  2022
-##  5 0703010E0BIAAAB                    1 S08000015  2022
-##  6 0703010E0BIAAAB                    2 S08000015  2022
-##  7 0703010F0BEAAAC                    2 S08000015  2022
-##  8 0703010F0BLAAAJ                    1 S08000015  2022
-##  9 0703010F0BNAAAC                    1 S08000015  2022
-## 10 0703010F0BPAAAC                   17 S08000015  2022
-## # ℹ 12,521 more rows
-## 
-## $may_2022
-## # A tibble: 13,210 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2022
-##  2 0703010E0BIAAAB                    1 S08000015  2022
-##  3 0703010F0BEAAAC                    2 S08000015  2022
-##  4 0703010F0BLAAAJ                    2 S08000015  2022
-##  5 0703010F0BNAAAC                    1 S08000015  2022
-##  6 0703010F0BPAAAC                    1 S08000015  2022
-##  7 0703010F0BPAAAC                   16 S08000015  2022
-##  8 0703010F0BVAAAJ                    1 S08000015  2022
-##  9 0703010G0BGAAAC                    1 S08000015  2022
-## 10 0703010G0BGAAAC                    1 S08000015  2022
-## # ℹ 13,200 more rows
-## 
-## $jun_2022
-## # A tibble: 12,656 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2022
-##  2 0703010F0BEAAAC                    2 S08000015  2022
-##  3 0703010F0BLAAAJ                    1 S08000015  2022
-##  4 0703010F0BPAAAC                   18 S08000015  2022
-##  5 0703010F0BQAAAA                    1 S08000015  2022
-##  6 0703010F0BQAAAA                    1 S08000015  2022
-##  7 0703021Q0AAAAAA                   21 S08000015  2022
-##  8 0703021Q0BDAAAA                    2 S08000015  2022
-##  9 0703022M0BBABAB                    4 S08000015  2022
-## 10 0703022M0BBABAB                    1 S08000015  2022
-## # ℹ 12,646 more rows
-## 
-## $jul_2022
-## # A tibble: 12,301 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2022
-##  2 0703010F0BFAAAC                    1 S08000015  2022
-##  3 0703010F0BNAAAC                    2 S08000015  2022
-##  4 0703010F0BPAAAC                   11 S08000015  2022
-##  5 0703010F0BQAAAA                    1 S08000015  2022
-##  6 0703010F0BVAAAJ                    1 S08000015  2022
-##  7 0703010G0BCAAAA                    1 S08000015  2022
-##  8 0703010G0BGAAAC                    2 S08000015  2022
-##  9 0703021L0BCAAAA                    1 S08000015  2022
-## 10 0703021N0BCAAAA                    2 S08000015  2022
-## # ℹ 12,291 more rows
-## 
-## $aug_2022
-## # A tibble: 13,236 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2022
-##  2 0703010E0BIAAAB                    2 S08000015  2022
-##  3 0703010F0BEAAAC                    2 S08000015  2022
-##  4 0703010F0BLAAAJ                    1 S08000015  2022
-##  5 0703010F0BNAAAC                    1 S08000015  2022
-##  6 0703010F0BPAAAC                   16 S08000015  2022
-##  7 0703010G0BGAAAC                    1 S08000015  2022
-##  8 0703021N0BCAAAA                    2 S08000015  2022
-##  9 0703021Q0AAAAAA                   35 S08000015  2022
-## 10 0703021Q0BBAAAA                    1 S08000015  2022
-## # ℹ 13,226 more rows
-## 
-## $sep_2022
-## # A tibble: 12,540 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BDAAAC                    1 S08000015  2022
-##  2 0703010F0BEAAAC                    2 S08000015  2022
-##  3 0703010F0BEABAH                    1 S08000015  2022
-##  4 0703010F0BLAAAJ                    1 S08000015  2022
-##  5 0703010F0BPAAAC                   13 S08000015  2022
-##  6 0703010F0BQAAAA                    1 S08000015  2022
-##  7 0703010G0BGAAAC                    3 S08000015  2022
-##  8 0703021N0BCAAAA                    2 S08000015  2022
-##  9 0703021Q0AAAAAA                   23 S08000015  2022
-## 10 0703021Q0BDAAAA                    2 S08000015  2022
-## # ℹ 12,530 more rows
-## 
-## $oct_2022
-## # A tibble: 12,614 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2022
-##  2 0703010F0BEAAAC                    1 S08000015  2022
-##  3 0703010F0BEABAH                    1 S08000015  2022
-##  4 0703010F0BLAAAJ                    1 S08000015  2022
-##  5 0703010F0BPAAAC                   19 S08000015  2022
-##  6 0703010F0BQAAAA                    3 S08000015  2022
-##  7 0703010G0BGAAAC                    1 S08000015  2022
-##  8 0703010G0BHAAAC                    1 S08000015  2022
-##  9 0703021N0BCAAAA                    1 S08000015  2022
-## 10 0703021Q0AAAAAA                   29 S08000015  2022
-## # ℹ 12,604 more rows
-## 
-## $nov_2022
-## # A tibble: 12,710 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BEAAAC                    3 S08000015  2022
-##  2 0703010F0BEABAH                    1 S08000015  2022
-##  3 0703010F0BLAAAJ                    1 S08000015  2022
-##  4 0703010F0BNAAAC                    2 S08000015  2022
-##  5 0703010F0BPAAAC                   16 S08000015  2022
-##  6 0703021N0BCAAAA                    1 S08000015  2022
-##  7 0703021Q0AAAAAA                   31 S08000015  2022
-##  8 0703022M0BBABAB                    1 S08000015  2022
-##  9 0703022M0BBABAB                    3 S08000015  2022
-## 10 0703022P0BCAAAA                    2 S08000015  2022
-## # ℹ 12,700 more rows
-## 
-## $dec_2022
-## # A tibble: 12,183 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BDAAAC                    1 S08000015  2022
-##  2 0703010E0BIAAAB                    1 S08000015  2022
-##  3 0703010E0BIAAAB                    1 S08000015  2022
-##  4 0703010F0BEABAH                    1 S08000015  2022
-##  5 0703010F0BLAAAJ                    2 S08000015  2022
-##  6 0703010F0BPAAAC                   10 S08000015  2022
-##  7 0703010G0BGAAAC                    1 S08000015  2022
-##  8 0703021N0BCAAAA                    1 S08000015  2022
-##  9 0703021Q0AAAAAA                   31 S08000015  2022
-## 10 0703021Q0BBAAAA                    1 S08000015  2022
-## # ℹ 12,173 more rows
-## 
-## $jan_2021
-## # A tibble: 13,077 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2021
-##  2 0703010E0BGAAAE                    1 S08000015  2021
-##  3 0703010E0BIAAAB                    2 S08000015  2021
-##  4 0703010F0BEAAAC                    1 S08000015  2021
-##  5 0703010F0BPAAAC                    1 S08000015  2021
-##  6 0703010F0BPAAAC                   14 S08000015  2021
-##  7 0703010F0BVAAAJ                    1 S08000015  2021
-##  8 0703010F0BVAAAJ                    1 S08000015  2021
-##  9 0703010G0BGAAAC                    2 S08000015  2021
-## 10 0703010G0BGAAAC                    1 S08000015  2021
-## # ℹ 13,067 more rows
-## 
-## $feb_2021
-## # A tibble: 12,511 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BDAAAC                    1 S08000015  2021
-##  2 0703010F0BEAAAC                    1 S08000015  2021
-##  3 0703010F0BEABAH                    1 S08000015  2021
-##  4 0703010F0BPAAAC                    1 S08000015  2021
-##  5 0703010F0BPAAAC                   15 S08000015  2021
-##  6 0703010F0BQAAAA                    1 S08000015  2021
-##  7 0703010G0BGAAAC                    2 S08000015  2021
-##  8 0703010G0BGAAAC                    1 S08000015  2021
-##  9 0703021N0BCAAAA                    1 S08000015  2021
-## 10 0703021Q0AAAAAA                   25 S08000015  2021
-## # ℹ 12,501 more rows
-## 
-## $mar_2021
-## # A tibble: 13,232 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2021
-##  2 0703010F0BBAAAA                    1 S08000015  2021
-##  3 0703010F0BEAAAC                    1 S08000015  2021
-##  4 0703010F0BEAAAC                    1 S08000015  2021
-##  5 0703010F0BFAAAC                    2 S08000015  2021
-##  6 0703010F0BLAAAJ                    2 S08000015  2021
-##  7 0703010F0BPAAAC                   14 S08000015  2021
-##  8 0703010G0BGAAAC                    1 S08000015  2021
-##  9 0703021L0BCAAAA                    1 S08000015  2021
-## 10 0703021Q0AAAAAA                   18 S08000015  2021
-## # ℹ 13,222 more rows
-## 
-## $apr_2021
-## # A tibble: 12,778 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2021
-##  2 0703010F0BEAAAC                    1 S08000015  2021
-##  3 0703010F0BPAAAC                    6 S08000015  2021
-##  4 0703010F0BQAAAA                    1 S08000015  2021
-##  5 0703010F0BVAAAJ                    1 S08000015  2021
-##  6 0703010F0BVAAAJ                    1 S08000015  2021
-##  7 0703010G0BGAAAC                    1 S08000015  2021
-##  8 0703021Q0AAAAAA                   32 S08000015  2021
-##  9 0703021Q0BBAAAA                    2 S08000015  2021
-## 10 0703021Q0BDAAAA                    4 S08000015  2021
-## # ℹ 12,768 more rows
-## 
-## $may_2021
-## # A tibble: 12,502 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2021
-##  2 0703010E0BGAAAE                    1 S08000015  2021
-##  3 0703010F0BEAAAC                    1 S08000015  2021
-##  4 0703010F0BEABAH                    1 S08000015  2021
-##  5 0703010F0BNAAAC                    1 S08000015  2021
-##  6 0703010F0BPAAAC                   21 S08000015  2021
-##  7 0703010F0BQAAAA                    1 S08000015  2021
-##  8 0703021N0BCAAAA                    1 S08000015  2021
-##  9 0703021Q0AAAAAA                   28 S08000015  2021
-## 10 0703021Q0BBAAAA                    1 S08000015  2021
-## # ℹ 12,492 more rows
-## 
-## $jun_2021
-## # A tibble: 13,143 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2021
-##  2 0703010E0BIAAAB                    1 S08000015  2021
-##  3 0703010F0BEABAH                    1 S08000015  2021
-##  4 0703010F0BPAAAC                   17 S08000015  2021
-##  5 0703010G0BGAAAC                    1 S08000015  2021
-##  6 0703010G0BGAAAC                    1 S08000015  2021
-##  7 0703021N0BCAAAA                    2 S08000015  2021
-##  8 0703021N0BCAAAA                    1 S08000015  2021
-##  9 0703021Q0AAAAAA                   22 S08000015  2021
-## 10 0703021Q0BBAAAA                    1 S08000015  2021
-## # ℹ 13,133 more rows
-## 
-## $jul_2021
-## # A tibble: 12,917 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2021
-##  2 0703010E0BGAAAE                    1 S08000015  2021
-##  3 0703010F0BNAAAC                    1 S08000015  2021
-##  4 0703010F0BPAAAC                   15 S08000015  2021
-##  5 0703010F0BQAAAA                    1 S08000015  2021
-##  6 0703010F0BVAAAJ                    1 S08000015  2021
-##  7 0703010G0BGAAAC                    1 S08000015  2021
-##  8 0703021N0BCAAAA                    1 S08000015  2021
-##  9 0703021Q0AAAAAA                   34 S08000015  2021
-## 10 0703021Q0BBAAAA                    1 S08000015  2021
-## # ℹ 12,907 more rows
-## 
-## $aug_2021
-## # A tibble: 12,727 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2021
-##  2 0703010E0BIAAAB                    2 S08000015  2021
-##  3 0703010F0BEAAAC                    2 S08000015  2021
-##  4 0703010F0BPAAAC                    1 S08000015  2021
-##  5 0703010F0BPAAAC                   16 S08000015  2021
-##  6 0703010G0BGAAAC                    2 S08000015  2021
-##  7 0703021N0BCAAAA                    1 S08000015  2021
-##  8 0703021Q0AAAAAA                   30 S08000015  2021
-##  9 0703021Q0BBAAAA                    1 S08000015  2021
-## 10 0703021Q0BDAAAA                    3 S08000015  2021
-## # ℹ 12,717 more rows
-## 
-## $sep_2021
-## # A tibble: 13,062 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2021
-##  2 0703010F0BEAAAC                    1 S08000015  2021
-##  3 0703010F0BEABAH                    1 S08000015  2021
-##  4 0703010F0BLAAAJ                    1 S08000015  2021
-##  5 0703010F0BNAAAC                    1 S08000015  2021
-##  6 0703010F0BPAAAC                   11 S08000015  2021
-##  7 0703010F0BQAAAA                    1 S08000015  2021
-##  8 0703021Q0AAAAAA                   18 S08000015  2021
-##  9 0703021Q0BDAAAA                    4 S08000015  2021
-## 10 0703022M0BBABAB                    4 S08000015  2021
-## # ℹ 13,052 more rows
-## 
-## $oct_2021
-## # A tibble: 12,689 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2021
-##  2 0703010F0BEAAAC                    3 S08000015  2021
-##  3 0703010F0BEABAH                    1 S08000015  2021
-##  4 0703010F0BNAAAC                    2 S08000015  2021
-##  5 0703010F0BPAAAC                   11 S08000015  2021
-##  6 0703010F0BVAAAJ                    1 S08000015  2021
-##  7 0703010G0BGAAAC                    2 S08000015  2021
-##  8 0703021N0BCAAAA                    4 S08000015  2021
-##  9 0703021Q0AAAAAA                   29 S08000015  2021
-## 10 0703021Q0BBAAAA                    1 S08000015  2021
-## # ℹ 12,679 more rows
-## 
-## $nov_2021
-## # A tibble: 12,827 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2021
-##  2 0703010E0BIAAAB                    1 S08000015  2021
-##  3 0703010F0BEAAAC                    1 S08000015  2021
-##  4 0703010F0BLAAAJ                    1 S08000015  2021
-##  5 0703010F0BPAAAC                   16 S08000015  2021
-##  6 0703010F0BQAAAA                    1 S08000015  2021
-##  7 0703010F0BVAAAJ                    1 S08000015  2021
-##  8 0703010G0BHAAAC                    1 S08000015  2021
-##  9 0703021Q0AAAAAA                   27 S08000015  2021
-## 10 0703021Q0BDAAAA                    1 S08000015  2021
-## # ℹ 12,817 more rows
-## 
-## $dec_2021
-## # A tibble: 12,836 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2021
-##  2 0703010E0BIAAAB                    1 S08000015  2021
-##  3 0703010E0BIAAAB                    2 S08000015  2021
-##  4 0703010F0BEAAAC                    2 S08000015  2021
-##  5 0703010F0BLAAAJ                    1 S08000015  2021
-##  6 0703010F0BNAAAC                    1 S08000015  2021
-##  7 0703010F0BPAAAC                   22 S08000015  2021
-##  8 0703010F0BQAAAA                    1 S08000015  2021
-##  9 0703010G0BGAAAC                    1 S08000015  2021
-## 10 0703021N0BCAAAA                    2 S08000015  2021
-## # ℹ 12,826 more rows
-## 
-## $jan_2020
-## # A tibble: 14,013 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2020
-##  2 0703010E0BIAAAB                    4 S08000015  2020
-##  3 0703010F0BEAAAC                    1 S08000015  2020
-##  4 0703010F0BEAAAC                    1 S08000015  2020
-##  5 0703010F0BEABAH                    1 S08000015  2020
-##  6 0703010F0BFAAAC                    1 S08000015  2020
-##  7 0703010F0BPAAAC                   12 S08000015  2020
-##  8 0703010F0BQAAAA                    1 S08000015  2020
-##  9 0703010F0BVAAAJ                    1 S08000015  2020
-## 10 0703010G0BCAAAA                    1 S08000015  2020
-## # ℹ 14,003 more rows
-## 
-## $feb_2020
-## # A tibble: 13,137 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    2 S08000015  2020
-##  2 0703010E0BDAAAC                    1 S08000015  2020
-##  3 0703010E0BGAAAE                    1 S08000015  2020
-##  4 0703010F0BBAAAA                    1 S08000015  2020
-##  5 0703010F0BEAAAC                    1 S08000015  2020
-##  6 0703010F0BEAAAC                    1 S08000015  2020
-##  7 0703010F0BEABAH                    1 S08000015  2020
-##  8 0703010F0BLAAAJ                    2 S08000015  2020
-##  9 0703010F0BPAAAC                   17 S08000015  2020
-## 10 0703010G0BCAAAA                    1 S08000015  2020
-## # ℹ 13,127 more rows
-## 
-## $mar_2020
-## # A tibble: 13,812 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    2 S08000015  2020
-##  2 0703010E0BIAAAB                    1 S08000015  2020
-##  3 0703010F0BEAAAC                    1 S08000015  2020
-##  4 0703010F0BFAAAC                    1 S08000015  2020
-##  5 0703010F0BPAAAC                   17 S08000015  2020
-##  6 0703010F0BQAAAA                    1 S08000015  2020
-##  7 0703010G0BGAAAC                    3 S08000015  2020
-##  8 0703010G0BHAAAC                    1 S08000015  2020
-##  9 0703021Q0AAAAAA                   17 S08000015  2020
-## 10 0703021Q0BBAAAA                    1 S08000015  2020
-## # ℹ 13,802 more rows
-## 
-## $apr_2020
-## # A tibble: 12,016 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2020
-##  2 0703010E0BJAAAC                    1 S08000015  2020
-##  3 0703010F0BEAAAC                    1 S08000015  2020
-##  4 0703010F0BEAAAC                    1 S08000015  2020
-##  5 0703010F0BEABAH                    1 S08000015  2020
-##  6 0703010F0BLAAAJ                    2 S08000015  2020
-##  7 0703010F0BPAAAC                   22 S08000015  2020
-##  8 0703010F0BQAAAA                    1 S08000015  2020
-##  9 0703010F0BVAAAJ                    1 S08000015  2020
-## 10 0703010G0BCAAAA                    2 S08000015  2020
-## # ℹ 12,006 more rows
-## 
-## $may_2020
-## # A tibble: 11,895 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2020
-##  2 0703010F0BEAAAC                    2 S08000015  2020
-##  3 0703010F0BPAAAC                   19 S08000015  2020
-##  4 0703010G0BGAAAC                    1 S08000015  2020
-##  5 0703021N0BCAAAA                    2 S08000015  2020
-##  6 0703021Q0AAAAAA                   25 S08000015  2020
-##  7 0703021Q0BBAAAA                    1 S08000015  2020
-##  8 0703021Q0BDAAAA                    3 S08000015  2020
-##  9 0703022M0BBABAB                    1 S08000015  2020
-## 10 0703022M0BDAAAC                    1 S08000015  2020
-## # ℹ 11,885 more rows
-## 
-## $jun_2020
-## # A tibble: 12,321 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BDAAAC                    1 S08000015  2020
-##  2 0703010E0BIAAAB                    1 S08000015  2020
-##  3 0703010F0BBAAAA                    1 S08000015  2020
-##  4 0703010F0BEABAH                    1 S08000015  2020
-##  5 0703010F0BJAAAE                    1 S08000015  2020
-##  6 0703010F0BLAAAJ                    1 S08000015  2020
-##  7 0703010F0BPAAAC                   19 S08000015  2020
-##  8 0703010F0BQAAAA                    1 S08000015  2020
-##  9 0703010G0BGAAAC                    2 S08000015  2020
-## 10 0703010G0BGAAAC                    1 S08000015  2020
-## # ℹ 12,311 more rows
-## 
-## $jul_2020
-## # A tibble: 12,675 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2020
-##  2 0703010F0BBAAAA                    1 S08000015  2020
-##  3 0703010F0BEAAAC                    1 S08000015  2020
-##  4 0703010F0BEAAAC                    1 S08000015  2020
-##  5 0703010F0BEABAH                    1 S08000015  2020
-##  6 0703010F0BLAAAJ                    2 S08000015  2020
-##  7 0703010F0BPAAAC                   27 S08000015  2020
-##  8 0703010F0BVAAAJ                    1 S08000015  2020
-##  9 0703010G0BHAAAC                    1 S08000015  2020
-## 10 0703021N0BCAAAA                    2 S08000015  2020
-## # ℹ 12,665 more rows
-## 
-## $aug_2020
-## # A tibble: 13,027 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2020
-##  2 0703010F0BBAAAA                    2 S08000015  2020
-##  3 0703010F0BEAAAC                    1 S08000015  2020
-##  4 0703010F0BEABAH                    1 S08000015  2020
-##  5 0703010F0BLAAAJ                    2 S08000015  2020
-##  6 0703010F0BNAAAC                    1 S08000015  2020
-##  7 0703010F0BPAAAC                    1 S08000015  2020
-##  8 0703010F0BPAAAC                   11 S08000015  2020
-##  9 0703010G0BGAAAC                    1 S08000015  2020
-## 10 0703010G0BGAAAC                    1 S08000015  2020
-## # ℹ 13,017 more rows
-## 
-## $sep_2020
-## # A tibble: 13,333 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2020
-##  2 0703010E0BIAAAB                    1 S08000015  2020
-##  3 0703010E0BIAAAB                    2 S08000015  2020
-##  4 0703010F0BEAAAC                    2 S08000015  2020
-##  5 0703010F0BEABAH                    1 S08000015  2020
-##  6 0703010F0BNAAAC                    1 S08000015  2020
-##  7 0703010F0BPAAAC                   11 S08000015  2020
-##  8 0703010F0BVAAAJ                    1 S08000015  2020
-##  9 0703010G0BGAAAC                    1 S08000015  2020
-## 10 0703021N0BCAAAA                    2 S08000015  2020
-## # ℹ 13,323 more rows
-## 
-## $oct_2020
-## # A tibble: 13,306 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    2 S08000015  2020
-##  2 0703010E0BIAAAB                    1 S08000015  2020
-##  3 0703010E0BJAAAC                    1 S08000015  2020
-##  4 0703010F0BBAAAA                    1 S08000015  2020
-##  5 0703010F0BEAAAC                    2 S08000015  2020
-##  6 0703010F0BEAAAC                    1 S08000015  2020
-##  7 0703010F0BEABAH                    1 S08000015  2020
-##  8 0703010F0BNAAAC                    1 S08000015  2020
-##  9 0703010F0BPAAAC                    1 S08000015  2020
-## 10 0703010F0BPAAAC                   19 S08000015  2020
-## # ℹ 13,296 more rows
-## 
-## $nov_2020
-## # A tibble: 13,539 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    2 S08000015  2020
-##  2 0703010E0BIAAAB                    1 S08000015  2020
-##  3 0703010E0BJAAAC                    1 S08000015  2020
-##  4 0703010F0BEAAAC                    2 S08000015  2020
-##  5 0703010F0BEABAH                    2 S08000015  2020
-##  6 0703010F0BLAAAJ                    1 S08000015  2020
-##  7 0703010F0BPAAAC                    1 S08000015  2020
-##  8 0703010F0BPAAAC                   17 S08000015  2020
-##  9 0703010G0BGAAAC                    1 S08000015  2020
-## 10 0703021L0BCAAAA                    1 S08000015  2020
-## # ℹ 13,529 more rows
-## 
-## $dec_2020
-## # A tibble: 13,571 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    2 S08000015  2020
-##  2 0703010F0BEAAAC                    1 S08000015  2020
-##  3 0703010F0BEABAH                    1 S08000015  2020
-##  4 0703010F0BNAAAC                    1 S08000015  2020
-##  5 0703010F0BPAAAC                   16 S08000015  2020
-##  6 0703010F0BVAAAJ                    1 S08000015  2020
-##  7 0703010G0BGAAAC                    1 S08000015  2020
-##  8 0703010G0BGAAAC                    3 S08000015  2020
-##  9 0703010G0BHAAAC                    1 S08000015  2020
-## 10 0703021Q0AAAAAA                   27 S08000015  2020
-## # ℹ 13,561 more rows
-## 
-## $jan_2019
-## # A tibble: 14,668 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    3 S08000015  2019
-##  2 0703010E0BIAAAB                    1 S08000015  2019
-##  3 0703010F0BEAAAC                    1 S08000015  2019
-##  4 0703010F0BFAAAC                    1 S08000015  2019
-##  5 0703010F0BLAAAJ                    1 S08000015  2019
-##  6 0703010F0BPAAAC                    1 S08000015  2019
-##  7 0703010F0BPAAAC                   14 S08000015  2019
-##  8 0703010F0BQAAAA                    1 S08000015  2019
-##  9 0703021N0BCAAAA                    3 S08000015  2019
-## 10 0703021Q0AAAAAA                   15 S08000015  2019
-## # ℹ 14,658 more rows
-## 
-## $feb_2019
-## # A tibble: 14,052 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BBAAAA                    1 S08000015  2019
-##  2 0703010F0BBAAAA                    1 S08000015  2019
-##  3 0703010F0BEABAH                    1 S08000015  2019
-##  4 0703010F0BFAAAC                    1 S08000015  2019
-##  5 0703010F0BIAAAF                    1 S08000015  2019
-##  6 0703010F0BLAAAJ                    1 S08000015  2019
-##  7 0703010F0BNAAAC                    1 S08000015  2019
-##  8 0703010F0BPAAAC                   14 S08000015  2019
-##  9 0703010F0BVAAAJ                    1 S08000015  2019
-## 10 0703010G0BFAAAC                    1 S08000015  2019
-## # ℹ 14,042 more rows
-## 
-## $mar_2019
-## # A tibble: 14,305 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2019
-##  2 0703010E0BIAAAB                    1 S08000015  2019
-##  3 0703010F0BEAAAC                    4 S08000015  2019
-##  4 0703010F0BFAAAC                    1 S08000015  2019
-##  5 0703010F0BIAAAF                    2 S08000015  2019
-##  6 0703010F0BLAAAJ                    2 S08000015  2019
-##  7 0703010F0BPAAAC                   24 S08000015  2019
-##  8 0703010F0BVAAAJ                    1 S08000015  2019
-##  9 0703010G0BFAAAC                    3 S08000015  2019
-## 10 0703021L0BCAAAA                    1 S08000015  2019
-## # ℹ 14,295 more rows
-## 
-## $apr_2019
-## # A tibble: 14,427 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2019
-##  2 0703010E0BIAAAB                    1 S08000015  2019
-##  3 0703010F0BEAAAC                    1 S08000015  2019
-##  4 0703010F0BEABAH                    1 S08000015  2019
-##  5 0703010F0BLAAAJ                    3 S08000015  2019
-##  6 0703010F0BPAAAC                   13 S08000015  2019
-##  7 0703010F0BVAAAJ                    1 S08000015  2019
-##  8 0703010G0BFAAAC                    2 S08000015  2019
-##  9 0703021L0BCAAAA                    1 S08000015  2019
-## 10 0703021N0BCAAAA                    2 S08000015  2019
-## # ℹ 14,417 more rows
-## 
-## $may_2019
-## # A tibble: 14,853 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2019
-##  2 0703010E0BGAAAE                    1 S08000015  2019
-##  3 0703010E0BIAAAB                    2 S08000015  2019
-##  4 0703010F0BEAAAC                    1 S08000015  2019
-##  5 0703010F0BEAAAC                    2 S08000015  2019
-##  6 0703010F0BFAAAC                    1 S08000015  2019
-##  7 0703010F0BIAAAF                    1 S08000015  2019
-##  8 0703010F0BPAAAC                   26 S08000015  2019
-##  9 0703010F0BVAAAJ                    2 S08000015  2019
-## 10 0703010G0BCAAAA                    1 S08000015  2019
-## # ℹ 14,843 more rows
-## 
-## $jun_2019
-## # A tibble: 14,392 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2019
-##  2 0703010E0BGAAAE                    1 S08000015  2019
-##  3 0703010F0BFAAAC                    2 S08000015  2019
-##  4 0703010F0BIAAAF                    1 S08000015  2019
-##  5 0703010F0BPAAAC                    1 S08000015  2019
-##  6 0703010F0BPAAAC                   18 S08000015  2019
-##  7 0703010F0BQAAAA                    1 S08000015  2019
-##  8 0703010F0BVAAAJ                    1 S08000015  2019
-##  9 0703021N0BCAAAA                    4 S08000015  2019
-## 10 0703021N0BCAAAA                    1 S08000015  2019
-## # ℹ 14,382 more rows
-## 
-## $jul_2019
-## # A tibble: 14,626 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2019
-##  2 0703010F0BEAAAC                    2 S08000015  2019
-##  3 0703010F0BEAAAC                    1 S08000015  2019
-##  4 0703010F0BEABAH                    1 S08000015  2019
-##  5 0703010F0BFAAAC                    1 S08000015  2019
-##  6 0703010F0BIAAAF                    1 S08000015  2019
-##  7 0703010F0BLAAAJ                    1 S08000015  2019
-##  8 0703010F0BPAAAC                   21 S08000015  2019
-##  9 0703010F0BQAAAA                    1 S08000015  2019
-## 10 0703010G0BCAAAA                    1 S08000015  2019
-## # ℹ 14,616 more rows
-## 
-## $aug_2019
-## # A tibble: 14,311 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BBAAAA                    1 S08000015  2019
-##  2 0703010F0BEAAAC                    1 S08000015  2019
-##  3 0703010F0BEABAH                    1 S08000015  2019
-##  4 0703010F0BFAAAC                    1 S08000015  2019
-##  5 0703010F0BJAAAE                    1 S08000015  2019
-##  6 0703010F0BPAAAC                   24 S08000015  2019
-##  7 0703010G0BCAAAA                    1 S08000015  2019
-##  8 0703010G0BFAAAC                    1 S08000015  2019
-##  9 0703021N0BCAAAA                    2 S08000015  2019
-## 10 0703021Q0AAAAAA                   12 S08000015  2019
-## # ℹ 14,301 more rows
-## 
-## $sep_2019
-## # A tibble: 13,865 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2019
-##  2 0703010E0BIAAAB                    1 S08000015  2019
-##  3 0703010F0BEABAH                    1 S08000015  2019
-##  4 0703010F0BFAAAC                    1 S08000015  2019
-##  5 0703010F0BPAAAC                   12 S08000015  2019
-##  6 0703010F0BQAAAA                    1 S08000015  2019
-##  7 0703010F0BQAAAA                    1 S08000015  2019
-##  8 0703010G0BCAAAA                    1 S08000015  2019
-##  9 0703010G0BFAAAC                    2 S08000015  2019
-## 10 0703021N0BCAAAA                    1 S08000015  2019
-## # ℹ 13,855 more rows
-## 
-## $oct_2019
-## # A tibble: 14,619 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    2 S08000015  2019
-##  2 0703010F0BBAAAA                    1 S08000015  2019
-##  3 0703010F0BEAAAC                    3 S08000015  2019
-##  4 0703010F0BEABAH                    1 S08000015  2019
-##  5 0703010F0BFAAAC                    1 S08000015  2019
-##  6 0703010F0BPAAAC                   20 S08000015  2019
-##  7 0703010F0BQAAAA                    2 S08000015  2019
-##  8 0703010G0BFAAAC                    1 S08000015  2019
-##  9 0703010G0BFAAAC                    3 S08000015  2019
-## 10 0703021L0BCAAAA                    1 S08000015  2019
-## # ℹ 14,609 more rows
-## 
-## $nov_2019
-## # A tibble: 13,983 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    3 S08000015  2019
-##  2 0703010F0BEAAAC                    1 S08000015  2019
-##  3 0703010F0BEAAAC                    1 S08000015  2019
-##  4 0703010F0BIAAAF                    1 S08000015  2019
-##  5 0703010F0BPAAAC                    1 S08000015  2019
-##  6 0703010F0BPAAAC                   20 S08000015  2019
-##  7 0703010G0BFAAAC                    1 S08000015  2019
-##  8 0703021N0BCAAAA                    1 S08000015  2019
-##  9 0703021Q0AAAAAA                   17 S08000015  2019
-## 10 0703021Q0BDAAAA                    7 S08000015  2019
-## # ℹ 13,973 more rows
-## 
-## $dec_2019
-## # A tibble: 13,622 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2019
-##  2 0703010E0BIAAAB                    1 S08000015  2019
-##  3 0703010F0BEAAAC                    1 S08000015  2019
-##  4 0703010F0BPAAAC                   17 S08000015  2019
-##  5 0703010F0BQAAAA                    1 S08000015  2019
-##  6 0703010G0BHAAAC                    1 S08000015  2019
-##  7 0703021L0BCAAAA                    1 S08000015  2019
-##  8 0703021N0BCAAAA                    1 S08000015  2019
-##  9 0703021Q0AAAAAA                   19 S08000015  2019
-## 10 0703021Q0BBAAAA                    3 S08000015  2019
-## # ℹ 13,612 more rows
-## 
-## $jan_2018
-## # A tibble: 14,875 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    4 S08000015  2018
-##  2 0703010F0BEAAAC                    1 S08000015  2018
-##  3 0703010F0BFAAAC                    3 S08000015  2018
-##  4 0703010F0BIAAAF                    2 S08000015  2018
-##  5 0703010F0BLAAAJ                    1 S08000015  2018
-##  6 0703010F0BPAAAC                    1 S08000015  2018
-##  7 0703010F0BPAAAC                   15 S08000015  2018
-##  8 0703010F0BQAAAA                    1 S08000015  2018
-##  9 0703010G0BFAAAC                    5 S08000015  2018
-## 10 0703021L0BCAAAA                    1 S08000015  2018
-## # ℹ 14,865 more rows
-## 
-## $feb_2018
-## # A tibble: 14,223 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2018
-##  2 0703010E0BGAAAE                    1 S08000015  2018
-##  3 0703010E0BIAAAB                    1 S08000015  2018
-##  4 0703010E0BIAAAB                    1 S08000015  2018
-##  5 0703010F0BEAAAC                    1 S08000015  2018
-##  6 0703010F0BFAAAC                    1 S08000015  2018
-##  7 0703010F0BIAAAF                    2 S08000015  2018
-##  8 0703010F0BPAAAC                   21 S08000015  2018
-##  9 0703010G0BFAAAC                    3 S08000015  2018
-## 10 0703021N0BCAAAA                    2 S08000015  2018
-## # ℹ 14,213 more rows
-## 
-## $mar_2018
-## # A tibble: 14,808 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2018
-##  2 0703010E0BDAAAC                    1 S08000015  2018
-##  3 0703010E0BIAAAB                    1 S08000015  2018
-##  4 0703010F0BEABAH                    1 S08000015  2018
-##  5 0703010F0BIAAAF                    1 S08000015  2018
-##  6 0703010F0BPAAAC                   11 S08000015  2018
-##  7 0703010F0BQAAAA                    1 S08000015  2018
-##  8 0703010G0BFAAAC                    2 S08000015  2018
-##  9 0703021L0BCAAAA                    1 S08000015  2018
-## 10 0703021N0BCAAAA                    2 S08000015  2018
-## # ℹ 14,798 more rows
-## 
-## $apr_2018
-## # A tibble: 14,440 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BGAAAE                    1 S08000015  2018
-##  2 0703010E0BGAAAE                    1 S08000015  2018
-##  3 0703010E0BIAAAB                    1 S08000015  2018
-##  4 0703010E0BRAAAF                    1 S08000015  2018
-##  5 0703010F0BEAAAC                    3 S08000015  2018
-##  6 0703010F0BFAAAC                    1 S08000015  2018
-##  7 0703010F0BIAAAF                    2 S08000015  2018
-##  8 0703010F0BJAAAE                    1 S08000015  2018
-##  9 0703010F0BLAAAJ                    2 S08000015  2018
-## 10 0703010F0BPAAAC                   27 S08000015  2018
-## # ℹ 14,430 more rows
-## 
-## $may_2018
-## # A tibble: 15,065 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BIAAAB                    1 S08000015  2018
-##  2 0703010F0BEAAAC                    1 S08000015  2018
-##  3 0703010F0BEABAH                    1 S08000015  2018
-##  4 0703010F0BLAAAJ                    1 S08000015  2018
-##  5 0703010F0BPAAAC                    1 S08000015  2018
-##  6 0703010F0BPAAAC                   17 S08000015  2018
-##  7 0703010G0BFAAAC                    2 S08000015  2018
-##  8 0703021N0BCAAAA                    1 S08000015  2018
-##  9 0703021Q0AAAAAA                   20 S08000015  2018
-## 10 0703021Q0BBAAAA                    4 S08000015  2018
-## # ℹ 15,055 more rows
-## 
-## $jun_2018
-## # A tibble: 14,590 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2018
-##  2 0703010E0BBAAAA                    1 S08000015  2018
-##  3 0703010E0BGAAAE                    2 S08000015  2018
-##  4 0703010E0BIAAAB                    1 S08000015  2018
-##  5 0703010F0BEABAH                    2 S08000015  2018
-##  6 0703010F0BFAAAC                    3 S08000015  2018
-##  7 0703010F0BLAAAJ                    1 S08000015  2018
-##  8 0703010F0BLAAAJ                    2 S08000015  2018
-##  9 0703010F0BPAAAC                   14 S08000015  2018
-## 10 0703010F0BVAAAJ                    1 S08000015  2018
-## # ℹ 14,580 more rows
-## 
-## $jul_2018
-## # A tibble: 14,346 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2018
-##  2 0703010E0BIAAAB                    2 S08000015  2018
-##  3 0703010F0BBAAAA                    1 S08000015  2018
-##  4 0703010F0BEAAAC                    1 S08000015  2018
-##  5 0703010F0BFAAAC                    2 S08000015  2018
-##  6 0703010F0BIAAAF                    1 S08000015  2018
-##  7 0703010F0BLAAAJ                    1 S08000015  2018
-##  8 0703010F0BPAAAC                   18 S08000015  2018
-##  9 0703010F0BQAAAA                    1 S08000015  2018
-## 10 0703010G0BFAAAC                    3 S08000015  2018
-## # ℹ 14,336 more rows
-## 
-## $aug_2018
-## # A tibble: 14,916 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2018
-##  2 0703010E0BCAAAB                    1 S08000015  2018
-##  3 0703010E0BDAAAC                    1 S08000015  2018
-##  4 0703010F0BBAAAA                    1 S08000015  2018
-##  5 0703010F0BEAAAC                    1 S08000015  2018
-##  6 0703010F0BEABAH                    1 S08000015  2018
-##  7 0703010F0BIAAAF                    2 S08000015  2018
-##  8 0703010F0BLAAAJ                    1 S08000015  2018
-##  9 0703010F0BPAAAC                   12 S08000015  2018
-## 10 0703010F0BQAAAA                    1 S08000015  2018
-## # ℹ 14,906 more rows
-## 
-## $sep_2018
-## # A tibble: 13,949 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2018
-##  2 0703010E0BGAAAE                    2 S08000015  2018
-##  3 0703010F0BBAAAA                    1 S08000015  2018
-##  4 0703010F0BEAAAC                    1 S08000015  2018
-##  5 0703010F0BFAAAC                    1 S08000015  2018
-##  6 0703010F0BFAAAC                    2 S08000015  2018
-##  7 0703010F0BNAAAC                    1 S08000015  2018
-##  8 0703010F0BPAAAC                    2 S08000015  2018
-##  9 0703010F0BPAAAC                   17 S08000015  2018
-## 10 0703010G0BFAAAC                    4 S08000015  2018
-## # ℹ 13,939 more rows
-## 
-## $oct_2018
-## # A tibble: 14,799 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010F0BEABAH                    1 S08000015  2018
-##  2 0703010F0BFAAAC                    1 S08000015  2018
-##  3 0703010F0BIAAAF                    1 S08000015  2018
-##  4 0703010F0BJAAAE                    1 S08000015  2018
-##  5 0703010F0BPAAAC                   11 S08000015  2018
-##  6 0703010G0BFAAAC                    2 S08000015  2018
-##  7 0703010R0BBAAAA                    1 S08000015  2018
-##  8 0703021L0BCAAAA                    1 S08000015  2018
-##  9 0703021N0BCAAAA                    1 S08000015  2018
-## 10 0703021Q0AAAAAA                   14 S08000015  2018
-## # ℹ 14,789 more rows
-## 
-## $nov_2018
-## # A tibble: 14,290 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2018
-##  2 0703010E0BCAAAB                    1 S08000015  2018
-##  3 0703010F0BEABAH                    2 S08000015  2018
-##  4 0703010F0BFAAAC                    1 S08000015  2018
-##  5 0703010F0BIAAAF                    1 S08000015  2018
-##  6 0703010F0BLAAAJ                    1 S08000015  2018
-##  7 0703010F0BPAAAC                   21 S08000015  2018
-##  8 0703010G0BFAAAC                    1 S08000015  2018
-##  9 0703021L0BCAAAA                    1 S08000015  2018
-## 10 0703021N0BCAAAA                    1 S08000015  2018
-## # ℹ 14,280 more rows
-## 
-## $dec_2018
-## # A tibble: 14,066 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2018
-##  2 0703010E0BGAAAE                    1 S08000015  2018
-##  3 0703010E0BIAAAB                    1 S08000015  2018
-##  4 0703010F0BBAAAA                    1 S08000015  2018
-##  5 0703010F0BEAAAC                    1 S08000015  2018
-##  6 0703010F0BFAAAC                    1 S08000015  2018
-##  7 0703010F0BIAAAF                    1 S08000015  2018
-##  8 0703010F0BLAAAJ                    1 S08000015  2018
-##  9 0703010F0BPAAAC                   16 S08000015  2018
-## 10 0703010F0BVAAAJ                    1 S08000015  2018
-## # ℹ 14,056 more rows
-## 
-## $jan_2017
-## # A tibble: 14,194 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    3 S08000015  2017
-##  2 0703010E0BJAAAC                    1 S08000015  2017
-##  3 0703010F0BEAAAC                    2 S08000015  2017
-##  4 0703010F0BEABAH                    1 S08000015  2017
-##  5 0703010F0BFAAAC                    1 S08000015  2017
-##  6 0703010F0BPAAAC                   21 S08000015  2017
-##  7 0703010F0BQAAAA                    2 S08000015  2017
-##  8 0703010G0BCAAAA                    1 S08000015  2017
-##  9 0703010G0BFAAAC                    3 S08000015  2017
-## 10 0703021N0BBAAAA                    2 S08000015  2017
-## # ℹ 14,184 more rows
-## 
-## $feb_2017
-## # A tibble: 15,116 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2017
-##  2 0703010E0BGAAAE                    1 S08000015  2017
-##  3 0703010E0BJAAAC                    1 S08000015  2017
-##  4 0703010F0BBAAAA                    1 S08000015  2017
-##  5 0703010F0BEAAAC                    2 S08000015  2017
-##  6 0703010F0BEABAH                    2 S08000015  2017
-##  7 0703010F0BFAAAC                    1 S08000015  2017
-##  8 0703010F0BJAAAE                    1 S08000015  2017
-##  9 0703010F0BLAAAJ                    1 S08000015  2017
-## 10 0703010F0BPAAAC                   15 S08000015  2017
-## # ℹ 15,106 more rows
-## 
-## $mar_2017
-## # A tibble: 15,650 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2017
-##  2 0703010E0BGAAAE                    1 S08000015  2017
-##  3 0703010E0BIAAAB                    2 S08000015  2017
-##  4 0703010F0BBAAAA                    1 S08000015  2017
-##  5 0703010F0BEAAAC                    2 S08000015  2017
-##  6 0703010F0BFAAAC                    2 S08000015  2017
-##  7 0703010F0BIAAAF                    2 S08000015  2017
-##  8 0703010F0BLAAAJ                    1 S08000015  2017
-##  9 0703010F0BPAAAC                   19 S08000015  2017
-## 10 0703010F0BQAAAA                    2 S08000015  2017
-## # ℹ 15,640 more rows
-## 
-## $apr_2017
-## # A tibble: 14,862 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2017
-##  2 0703010E0BIAAAB                    1 S08000015  2017
-##  3 0703010F0BEAAAC                    5 S08000015  2017
-##  4 0703010F0BEABAH                    2 S08000015  2017
-##  5 0703010F0BFAAAC                    2 S08000015  2017
-##  6 0703010F0BLAAAJ                    1 S08000015  2017
-##  7 0703010F0BPAAAC                   24 S08000015  2017
-##  8 0703010F0BVAAAJ                    1 S08000015  2017
-##  9 0703010G0BFAAAC                    2 S08000015  2017
-## 10 0703021N0BCAAAA                    1 S08000015  2017
-## # ℹ 14,852 more rows
-## 
-## $may_2017
-## # A tibble: 15,921 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2017
-##  2 0703010E0BGAAAE                    2 S08000015  2017
-##  3 0703010F0BEAAAC                    1 S08000015  2017
-##  4 0703010F0BIAAAF                    1 S08000015  2017
-##  5 0703010F0BLAAAJ                    2 S08000015  2017
-##  6 0703010F0BPAAAC                   15 S08000015  2017
-##  7 0703010F0BQAAAA                    1 S08000015  2017
-##  8 0703010G0BFAAAC                    6 S08000015  2017
-##  9 0703021N0BCAAAA                    1 S08000015  2017
-## 10 0703021Q0AAAAAA                   13 S08000015  2017
-## # ℹ 15,911 more rows
-## 
-## $jun_2017
-## # A tibble: 15,420 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2017
-##  2 0703010E0BIAAAB                    2 S08000015  2017
-##  3 0703010E0BLAAAB                    1 S08000015  2017
-##  4 0703010F0BBAAAA                    2 S08000015  2017
-##  5 0703010F0BEAAAC                    3 S08000015  2017
-##  6 0703010F0BFAAAC                    3 S08000015  2017
-##  7 0703010F0BPAAAC                    1 S08000015  2017
-##  8 0703010F0BPAAAC                   19 S08000015  2017
-##  9 0703010F0BQAAAA                    1 S08000015  2017
-## 10 0703010F0BVAAAJ                    1 S08000015  2017
-## # ℹ 15,410 more rows
-## 
-## $jul_2017
-## # A tibble: 14,618 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2017
-##  2 0703010E0BIAAAB                    1 S08000015  2017
-##  3 0703010F0BEAAAC                    2 S08000015  2017
-##  4 0703010F0BEABAH                    1 S08000015  2017
-##  5 0703010F0BFAAAC                    2 S08000015  2017
-##  6 0703010F0BIAAAF                    1 S08000015  2017
-##  7 0703010F0BLAAAJ                    1 S08000015  2017
-##  8 0703010F0BPAAAC                   13 S08000015  2017
-##  9 0703010F0BQAAAA                    1 S08000015  2017
-## 10 0703010G0BCAAAA                    1 S08000015  2017
-## # ℹ 14,608 more rows
-## 
-## $aug_2017
-## # A tibble: 15,296 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2017
-##  2 0703010E0BBAAAA                    3 S08000015  2017
-##  3 0703010E0BGAAAE                    1 S08000015  2017
-##  4 0703010E0BIAAAB                    1 S08000015  2017
-##  5 0703010F0BBAAAA                    1 S08000015  2017
-##  6 0703010F0BEAAAC                    1 S08000015  2017
-##  7 0703010F0BFAAAC                    1 S08000015  2017
-##  8 0703010F0BIAAAF                    1 S08000015  2017
-##  9 0703010F0BLAAAJ                    2 S08000015  2017
-## 10 0703010F0BPAAAC                   29 S08000015  2017
-## # ℹ 15,286 more rows
-## 
-## $sep_2017
-## # A tibble: 14,592 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2017
-##  2 0703010E0BGAAAE                    1 S08000015  2017
-##  3 0703010E0BIAAAB                    1 S08000015  2017
-##  4 0703010F0BEAAAC                    1 S08000015  2017
-##  5 0703010F0BFAAAC                    3 S08000015  2017
-##  6 0703010F0BIAAAF                    1 S08000015  2017
-##  7 0703010F0BIAAAF                    1 S08000015  2017
-##  8 0703010F0BPAAAC                   10 S08000015  2017
-##  9 0703010G0BFAAAC                    3 S08000015  2017
-## 10 0703021L0BCAAAA                    1 S08000015  2017
-## # ℹ 14,582 more rows
-## 
-## $oct_2017
-## # A tibble: 14,886 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2017
-##  2 0703010E0BBAAAA                    1 S08000015  2017
-##  3 0703010E0BDAAAC                    1 S08000015  2017
-##  4 0703010E0BIAAAB                    1 S08000015  2017
-##  5 0703010F0BEAAAC                    1 S08000015  2017
-##  6 0703010F0BFAAAC                    4 S08000015  2017
-##  7 0703010F0BPAAAC                   24 S08000015  2017
-##  8 0703010F0BQAAAA                    1 S08000015  2017
-##  9 0703010F0BVAAAJ                    1 S08000015  2017
-## 10 0703010G0BFAAAC                    6 S08000015  2017
-## # ℹ 14,876 more rows
-## 
-## $nov_2017
-## # A tibble: 14,815 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    3 S08000015  2017
-##  2 0703010E0BGAAAE                    1 S08000015  2017
-##  3 0703010E0BGAAAE                    1 S08000015  2017
-##  4 0703010E0BIAAAB                    2 S08000015  2017
-##  5 0703010F0BEAAAC                    3 S08000015  2017
-##  6 0703010F0BFAAAC                    1 S08000015  2017
-##  7 0703010F0BIAAAF                    1 S08000015  2017
-##  8 0703010F0BIAAAF                    2 S08000015  2017
-##  9 0703010F0BJAAAE                    1 S08000015  2017
-## 10 0703010F0BLAAAJ                    1 S08000015  2017
-## # ℹ 14,805 more rows
-## 
-## $dec_2017
-## # A tibble: 14,313 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2017
-##  2 0703010F0BEAAAC                    1 S08000015  2017
-##  3 0703010F0BEABAH                    1 S08000015  2017
-##  4 0703010F0BFAAAC                    1 S08000015  2017
-##  5 0703010F0BIAAAF                    2 S08000015  2017
-##  6 0703010F0BLAAAJ                    1 S08000015  2017
-##  7 0703010F0BPAAAC                   15 S08000015  2017
-##  8 0703010F0BQAAAA                    1 S08000015  2017
-##  9 0703010G0BFAAAC                    1 S08000015  2017
-## 10 0703021N0BCAAAA                    1 S08000015  2017
-## # ℹ 14,303 more rows
-## 
-## $jan_2016
-## # A tibble: 14,380 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2016
-##  2 0703010E0BGAAAE                    2 S08000015  2016
-##  3 0703010E0BJAAAC                    1 S08000015  2016
-##  4 0703010F0BEAAAC                    2 S08000015  2016
-##  5 0703010F0BFAAAC                    2 S08000015  2016
-##  6 0703010F0BLAAAJ                    1 S08000015  2016
-##  7 0703010F0BPAAAC                   19 S08000015  2016
-##  8 0703010F0BQAAAA                    7 S08000015  2016
-##  9 0703010G0BFAAAC                    2 S08000015  2016
-## 10 0703021N0BBAAAA                    5 S08000015  2016
-## # ℹ 14,370 more rows
-## 
-## $feb_2016
-## # A tibble: 14,202 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2016
-##  2 0703010E0BGAAAE                    2 S08000015  2016
-##  3 0703010F0BBAAAA                    2 S08000015  2016
-##  4 0703010F0BEAAAC                    3 S08000015  2016
-##  5 0703010F0BEABAH                    1 S08000015  2016
-##  6 0703010F0BFAAAC                    2 S08000015  2016
-##  7 0703010F0BIAAAF                    1 S08000015  2016
-##  8 0703010F0BLAAAJ                    5 S08000015  2016
-##  9 0703010F0BPAAAC                   23 S08000015  2016
-## 10 0703010F0BQAAAA                    1 S08000015  2016
-## # ℹ 14,192 more rows
-## 
-## $mar_2016
-## # A tibble: 14,423 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    4 S08000015  2016
-##  2 0703010F0BBAAAA                    1 S08000015  2016
-##  3 0703010F0BEABAH                    1 S08000015  2016
-##  4 0703010F0BJABAG                    1 S08000015  2016
-##  5 0703010F0BLAAAJ                    2 S08000015  2016
-##  6 0703010F0BPAAAC                   27 S08000015  2016
-##  7 0703010G0BFAAAC                    5 S08000015  2016
-##  8 0703010G0BGAAAC                    1 S08000015  2016
-##  9 0703021L0BCAAAA                    1 S08000015  2016
-## 10 0703021N0BBAAAA                    6 S08000015  2016
-## # ℹ 14,413 more rows
-## 
-## $apr_2016
-## # A tibble: 14,467 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    4 S08000015  2016
-##  2 0703010E0BIAAAB                    2 S08000015  2016
-##  3 0703010E0BJAAAC                    1 S08000015  2016
-##  4 0703010F0BBAAAA                    1 S08000015  2016
-##  5 0703010F0BEAAAC                    1 S08000015  2016
-##  6 0703010F0BEABAH                    1 S08000015  2016
-##  7 0703010F0BFAAAC                    1 S08000015  2016
-##  8 0703010F0BIAAAF                    2 S08000015  2016
-##  9 0703010F0BJAAAE                    1 S08000015  2016
-## 10 0703010F0BLAAAJ                    1 S08000015  2016
-## # ℹ 14,457 more rows
-## 
-## $may_2016
-## # A tibble: 14,581 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    3 S08000015  2016
-##  2 0703010E0BCAAAB                    1 S08000015  2016
-##  3 0703010E0BGAAAE                    2 S08000015  2016
-##  4 0703010E0BIAAAB                    1 S08000015  2016
-##  5 0703010F0BBAAAA                    2 S08000015  2016
-##  6 0703010F0BEAAAC                    4 S08000015  2016
-##  7 0703010F0BEABAH                    2 S08000015  2016
-##  8 0703010F0BFAAAC                    3 S08000015  2016
-##  9 0703010F0BIAAAF                    4 S08000015  2016
-## 10 0703010F0BJAAAE                    1 S08000015  2016
-## # ℹ 14,571 more rows
-## 
-## $jun_2016
-## # A tibble: 14,382 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2016
-##  2 0703010F0BBAAAA                    1 S08000015  2016
-##  3 0703010F0BEAAAC                    4 S08000015  2016
-##  4 0703010F0BFAAAC                    1 S08000015  2016
-##  5 0703010F0BIAAAF                    3 S08000015  2016
-##  6 0703010F0BLAAAJ                    2 S08000015  2016
-##  7 0703010F0BPAAAC                   26 S08000015  2016
-##  8 0703010F0BQAAAA                    1 S08000015  2016
-##  9 0703010G0BCAAAA                    1 S08000015  2016
-## 10 0703010G0BFAAAC                    2 S08000015  2016
-## # ℹ 14,372 more rows
-## 
-## $jul_2016
-## # A tibble: 14,000 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    5 S08000015  2016
-##  2 0703010E0BCAAAB                    1 S08000015  2016
-##  3 0703010E0BGAAAE                    1 S08000015  2016
-##  4 0703010F0BBAAAA                    1 S08000015  2016
-##  5 0703010F0BEAAAC                    2 S08000015  2016
-##  6 0703010F0BEABAH                    1 S08000015  2016
-##  7 0703010F0BFAAAC                    3 S08000015  2016
-##  8 0703010F0BIAAAF                    2 S08000015  2016
-##  9 0703010F0BLAAAJ                    4 S08000015  2016
-## 10 0703010F0BPAAAC                   21 S08000015  2016
-## # ℹ 13,990 more rows
-## 
-## $aug_2016
-## # A tibble: 14,679 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2016
-##  2 0703010E0BGAAAE                    1 S08000015  2016
-##  3 0703010E0BIAAAB                    1 S08000015  2016
-##  4 0703010F0BBAAAA                    2 S08000015  2016
-##  5 0703010F0BEAAAC                    1 S08000015  2016
-##  6 0703010F0BEABAH                    2 S08000015  2016
-##  7 0703010F0BFAAAC                    1 S08000015  2016
-##  8 0703010F0BIAAAF                    5 S08000015  2016
-##  9 0703010F0BJAAAE                    2 S08000015  2016
-## 10 0703010F0BJABAG                    2 S08000015  2016
-## # ℹ 14,669 more rows
-## 
-## $sep_2016
-## # A tibble: 14,135 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    2 S08000015  2016
-##  2 0703010E0BIAAAB                    1 S08000015  2016
-##  3 0703010E0BJAAAC                    1 S08000015  2016
-##  4 0703010F0BBAAAA                    1 S08000015  2016
-##  5 0703010F0BEAAAC                    1 S08000015  2016
-##  6 0703010F0BEABAH                    1 S08000015  2016
-##  7 0703010F0BIAAAF                    1 S08000015  2016
-##  8 0703010F0BPAAAC                   23 S08000015  2016
-##  9 0703010G0BCAAAA                    1 S08000015  2016
-## 10 0703010G0BFAAAC                    4 S08000015  2016
-## # ℹ 14,125 more rows
-## 
-## $oct_2016
-## # A tibble: 14,091 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2016
-##  2 0703010E0BGAAAE                    3 S08000015  2016
-##  3 0703010F0BEAAAC                    1 S08000015  2016
-##  4 0703010F0BFAAAC                    1 S08000015  2016
-##  5 0703010F0BIAAAF                    1 S08000015  2016
-##  6 0703010F0BLAAAJ                    1 S08000015  2016
-##  7 0703010F0BPAAAC                   18 S08000015  2016
-##  8 0703010F0BQAAAA                    2 S08000015  2016
-##  9 0703010G0BFAAAC                    4 S08000015  2016
-## 10 0703021L0BCAAAA                    1 S08000015  2016
-## # ℹ 14,081 more rows
-## 
-## $nov_2016
-## # A tibble: 14,214 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BCAAAB                    1 S08000015  2016
-##  2 0703010E0BGAAAE                    1 S08000015  2016
-##  3 0703010E0BIAAAB                    2 S08000015  2016
-##  4 0703010F0BEAAAC                    1 S08000015  2016
-##  5 0703010F0BEABAH                    1 S08000015  2016
-##  6 0703010F0BFAAAC                    1 S08000015  2016
-##  7 0703010F0BLAAAJ                    2 S08000015  2016
-##  8 0703010F0BPAAAC                   17 S08000015  2016
-##  9 0703010F0BQAAAA                    2 S08000015  2016
-## 10 0703010G0BFAAAC                    2 S08000015  2016
-## # ℹ 14,204 more rows
-## 
-## $dec_2016
-## # A tibble: 13,932 × 4
-##    bnf_item_code   number_of_paid_items hb         year
-##    &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-##  1 0703010E0BBAAAA                    1 S08000015  2016
-##  2 0703010E0BGAAAE                    1 S08000015  2016
-##  3 0703010E0BIAAAB                    1 S08000015  2016
-##  4 0703010F0BFAAAC                    3 S08000015  2016
-##  5 0703010F0BIAAAF                    5 S08000015  2016
-##  6 0703010F0BLAAAJ                    3 S08000015  2016
-##  7 0703010F0BPAAAC                   25 S08000015  2016
-##  8 0703010F0BQAAAA                    2 S08000015  2016
-##  9 0703010G0BFAAAC                    4 S08000015  2016
-## 10 0703021N0BBAAAA                    4 S08000015  2016
-## # ℹ 13,922 more rows</code></pre>
 <p>The data was then further divided into long-term contraceptives (IUD,
 coil, and implant) lasting several years and short-term contraceptives
 that have to be taken regularly (oral tablets, cervical caps, and
@@ -2211,20 +676,20 @@ combined_data_2016_2023_diff &lt;- combined_data %&gt;%
       rows = `diff_contr` &lt; (-109.29)
     ),
     style = list(cell_text(color = &#39;red&#39;)))</code></pre>
-<div id="ieoxyivvnu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ieoxyivvnu table {
+<div id="aikycuedjd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#aikycuedjd table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#ieoxyivvnu thead, #ieoxyivvnu tbody, #ieoxyivvnu tfoot, #ieoxyivvnu tr, #ieoxyivvnu td, #ieoxyivvnu th {
+#aikycuedjd thead, #aikycuedjd tbody, #aikycuedjd tfoot, #aikycuedjd tr, #aikycuedjd td, #aikycuedjd th {
 border-style: none;
 }
-#ieoxyivvnu p {
+#aikycuedjd p {
 margin: 0;
 padding: 0;
 }
-#ieoxyivvnu .gt_table {
+#aikycuedjd .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2249,11 +714,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_caption {
+#aikycuedjd .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ieoxyivvnu .gt_title {
+#aikycuedjd .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2264,7 +729,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ieoxyivvnu .gt_subtitle {
+#aikycuedjd .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2275,7 +740,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ieoxyivvnu .gt_heading {
+#aikycuedjd .gt_heading {
 background-color: #FFFFFF;
 text-align: left;
 border-bottom-color: #FFFFFF;
@@ -2286,12 +751,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_bottom_border {
+#aikycuedjd .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_col_headings {
+#aikycuedjd .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2305,7 +770,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_col_heading {
+#aikycuedjd .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2324,7 +789,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ieoxyivvnu .gt_column_spanner_outer {
+#aikycuedjd .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2335,13 +800,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ieoxyivvnu .gt_column_spanner_outer:first-child {
+#aikycuedjd .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ieoxyivvnu .gt_column_spanner_outer:last-child {
+#aikycuedjd .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ieoxyivvnu .gt_column_spanner {
+#aikycuedjd .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2352,10 +817,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ieoxyivvnu .gt_spanner_row {
+#aikycuedjd .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#ieoxyivvnu .gt_group_heading {
+#aikycuedjd .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2380,7 +845,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ieoxyivvnu .gt_empty_group_heading {
+#aikycuedjd .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2394,13 +859,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ieoxyivvnu .gt_from_md > :first-child {
+#aikycuedjd .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ieoxyivvnu .gt_from_md > :last-child {
+#aikycuedjd .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ieoxyivvnu .gt_row {
+#aikycuedjd .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2418,7 +883,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ieoxyivvnu .gt_stub {
+#aikycuedjd .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2430,7 +895,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ieoxyivvnu .gt_stub_row_group {
+#aikycuedjd .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2443,13 +908,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ieoxyivvnu .gt_row_group_first td {
+#aikycuedjd .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ieoxyivvnu .gt_row_group_first th {
+#aikycuedjd .gt_row_group_first th {
 border-top-width: 2px;
 }
-#ieoxyivvnu .gt_summary_row {
+#aikycuedjd .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2458,14 +923,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ieoxyivvnu .gt_first_summary_row {
+#aikycuedjd .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_first_summary_row.thick {
+#aikycuedjd .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ieoxyivvnu .gt_last_summary_row {
+#aikycuedjd .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2474,7 +939,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_grand_summary_row {
+#aikycuedjd .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2483,7 +948,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ieoxyivvnu .gt_first_grand_summary_row {
+#aikycuedjd .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2492,7 +957,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_last_grand_summary_row_top {
+#aikycuedjd .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2501,10 +966,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_striped {
+#aikycuedjd .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ieoxyivvnu .gt_table_body {
+#aikycuedjd .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2512,7 +977,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_footnotes {
+#aikycuedjd .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2525,7 +990,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_footnote {
+#aikycuedjd .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2533,7 +998,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ieoxyivvnu .gt_sourcenotes {
+#aikycuedjd .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2546,64 +1011,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ieoxyivvnu .gt_sourcenote {
+#aikycuedjd .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ieoxyivvnu .gt_left {
+#aikycuedjd .gt_left {
 text-align: left;
 }
-#ieoxyivvnu .gt_center {
+#aikycuedjd .gt_center {
 text-align: center;
 }
-#ieoxyivvnu .gt_right {
+#aikycuedjd .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ieoxyivvnu .gt_font_normal {
+#aikycuedjd .gt_font_normal {
 font-weight: normal;
 }
-#ieoxyivvnu .gt_font_bold {
+#aikycuedjd .gt_font_bold {
 font-weight: bold;
 }
-#ieoxyivvnu .gt_font_italic {
+#aikycuedjd .gt_font_italic {
 font-style: italic;
 }
-#ieoxyivvnu .gt_super {
+#aikycuedjd .gt_super {
 font-size: 65%;
 }
-#ieoxyivvnu .gt_footnote_marks {
+#aikycuedjd .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#ieoxyivvnu .gt_asterisk {
+#aikycuedjd .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ieoxyivvnu .gt_indent_1 {
+#aikycuedjd .gt_indent_1 {
 text-indent: 5px;
 }
-#ieoxyivvnu .gt_indent_2 {
+#aikycuedjd .gt_indent_2 {
 text-indent: 10px;
 }
-#ieoxyivvnu .gt_indent_3 {
+#aikycuedjd .gt_indent_3 {
 text-indent: 15px;
 }
-#ieoxyivvnu .gt_indent_4 {
+#aikycuedjd .gt_indent_4 {
 text-indent: 20px;
 }
-#ieoxyivvnu .gt_indent_5 {
+#aikycuedjd .gt_indent_5 {
 text-indent: 25px;
 }
-#ieoxyivvnu .katex-display {
+#aikycuedjd .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#ieoxyivvnu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#aikycuedjd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>

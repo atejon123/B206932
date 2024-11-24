@@ -213,7 +213,7 @@ prescription_data_urls <- c(
 ```
 
 
-```{r Data reading and cleaning}
+```{r Data reading and cleaning, results = "hide"}
 columns_needed_from_prescription <- c("BNFItemCode", "NumberOfPaidItems", "HBT", "HBT2014", "PaidDateMonth")
 
 read_and_clean <- function(url) {
