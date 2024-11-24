@@ -8,7 +8,7 @@ date: "2024-11-01"
 
 Birth control availability was a liberating step towards women having full control of their reproduction. However, this liberation started shifting towards new means of constraints by society putting a huge burden on women as sole responsibility bearers when it comes to pregnancy prevention. Female contraceptives being the most effective birth control means that women have to put up with an extensive list of side effects with no equivalent male alternatives. In recent years, health risks associated with hormonal contraceptive usage started being discussed more [1]. Social media plays a significant role in shaping opinions about hormonal contraceptives and in turn their decline in various Western countries [2]. Female contraceptives have been critiqued for their extensive list of side effects. In contrast, the dismissive attitude of general health practitioners when it comes to contraceptive choice has sparked distrust. On the one hand, such discussions highlight important issues and encourage informed choice; on the other hand, they create a space for misinformation and skewed experiences getting more representation than the general ones.
 
-Nevertheless, female contraceptives remain the most reliable way to prevent unwanted pregnancy [3]. The changes in birth control usage probe the question of how this correlates with further measures to terminate pregnancy. This report will explore female contraceptive trends in Scotland between 2018 and 2023 and look at how this trend correlated with pregnancy termination statistics.
+Nevertheless, female contraceptives remain the most reliable way to prevent unwanted pregnancy [3]. The changes in birth control usage probe the question of how this correlates with further measures to terminate unwanted pregnancy. This report will explore female contraceptive trends in Scotland between 2018 and 2023 and look at how this trend correlated with pregnancy termination statistics.
 
 
 ### AIMS of this report:
@@ -19,36 +19,29 @@ Nevertheless, female contraceptives remain the most reliable way to prevent unwa
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warnings=FALSE, include = TRUE)
 ```
 
 
-```{r Used packages, include=FALSE}
+```{r Used packages}
 library(tidyverse)
 library(janitor) # cleaning data
 library(gt) # tables
-library(here) # directory structure (will be useful later)
-library(vroom)
-library(stringr)
-library(pals)
-library(patchwork)
+library(here) # directory structure 
+library(vroom) # efficient data reading
+library(stringr) # for manipulating strings
+library(pals) # contains multiple colour palletes
 ```
 
 ## Data used in the report
 
 Abortion and prescription data used in this report has been obtained from [Public Health Scotland](https://www.opendata.nhs.scot/dataset). For showing the contraceptive usage trend in 8 years all age data was used that includes females under 20 to females over 40.
 
-To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 women in the health board per [2022 Cencus data](https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml). While the total population might change over the years we are expecting that the change won't be significant to impact the overall trends. Only women of biological reproductive age were included as the members of this group were the most likely to get pregnant. The chosen reproductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [4].
-
-Prescription data has been filtered based on the BNF item code. Codes beginning with 0703 and 21040 were selected as representing contraceptive medication and devices.
-
-The data was then further divided into long-term contraceptives (IUD, coil, and implant) lasting several years and short-term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to the short-term category. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
-
-We are assuming that there is a direct link between contraceptive dispensation and usage; therefore, in some parts of the report, the dispensation data is referred to as usage data.
+To ensure comparable figures between different boards the number of pregnancy termination events was normalised per 1000 women in the health board per [2022 Cencus data](https://www.scotlandscensus.gov.uk/webapi/jsf/tableView/tableView.xhtml) (Scotland's Census 2022 - National Records of Scotland
+Table UV102a - Age (single year) by sex). While the total population might change over the years we are expecting that the change won't be significant to impact the overall trends. Only women of biological reproductive age were included as the members of this group were the most likely to get pregnant. The chosen reproductive age span was from 13 (average age of first menstruation) to 50 (average age of natural menopause) [4].
 
 
-```{r Heatlh board names and population, include=FALSE}
-
+```{r Heatlh board names and population}
 # Health board name and codes selected
 health_boards <- read_csv("https://www.opendata.nhs.scot/dataset/9f942fdb-e59e-44f5-b534-d6e17229cc7b/resource/652ff726-e676-4a20-abda-435b98dd7bdc/download/hb14_hb19.csv") %>% 
   clean_names() %>% 
@@ -64,14 +57,13 @@ other_health_boards <- read_csv("https://www.opendata.nhs.scot/dataset/65402d20-
 health_boards <- bind_rows(health_boards, other_health_boards)
 
 # get health board population data and extract female of reproductive age population numbers for each health board 
-health_board_population <- read_csv(here( "data", "UV103_age_health_board_census.csv"), skip = 10) %>% 
+health_board_population <- read_csv(here( "data", "Table_UV102a_Age_by_sex.csv"), skip = 10) %>% 
   clean_names() %>% 
   rename(hb_name = "health_board_area_2019") %>% 
   filter(age %in% c(13:50), sex == "Female") %>% 
   group_by(hb_name) %>% 
   summarise(female_repro_population = sum(count)) %>% 
   mutate(hb_name = paste("NHS", hb_name)) 
-
 
 boards_to_sum <- c("NHS Orkney", "NHS Shetland", "NHS Western Isles")
 
@@ -81,59 +73,32 @@ islands_population <- health_board_population %>%
   summarise(total_population = sum(female_repro_population, na.rm = TRUE)) %>%
   pull(total_population)
 
-# combining health board names and populations removing NHS from Health board name for readibility in plots and adding Islands population to the full dataframe
+# combining health board names and populations removing NHS from Health board name for readability in plots and adding Islands population to the full dataframe
 health_board_population <- full_join(health_board_population, health_boards, by = "hb_name") %>% 
-  mutate(hb_name = factor(hb_name, labels = c(
-    "NHS Ayrshire and Arran" = "Ayrshire and Arran",
-    "NHS Borders" = "Borders",
-    "NHS Dumfries and Galloway" = "Dumfries and Galloway",
-    "NHS Fife" = "Fife",
-    "NHS Forth Valley" = "Forth Valley",
-    "NHS Grampian" = "Grampian",
-    "NHS Greater Glasgow and Clyde" = "Greater Glasgow and Clyde",
-    "NHS Highland" = "Highland",
-    "NHS Island Boards" = "Islands",
-    "NHS Lanarkshire" = "Lanarkshire",
-    "NHS Lothian" = "Lothian",
-    "NHS Orkney" = "Orkney",
-    "NHS Shetland" = "Shetland",
-    "NHS Tayside" = "Tayside",
-    "NHS Western Isles" = "Western Isles"
-  ))) %>% 
-  mutate(female_repro_population = case_when(hb_name == "Islands" ~ islands_population,
-                                             TRUE ~ female_repro_population))
-
-
-
-
+  mutate(hb_name = str_remove(hb_name, "NHS ")) %>% 
+  mutate(female_repro_population = case_when(hb_name == "Island Boards" ~ islands_population, .default = female_repro_population))
 ```
-
-
-
-```{r Abortion data, include=FALSE}
-#data on abortion 2000-2023
+```{r Abortion data}
+# data on abortion 2016-2023
 abortion_data <- read_csv("https://www.opendata.nhs.scot/dataset/d684d4a5-f7ae-4a1a-ae8d-adf55304274e/resource/342f9627-dfdd-41f5-a27c-0a3c7bcb8672/download/residence_age_2023.csv") %>% 
   clean_names() %>% 
   rename(hb = "hbr", year = "yearof_termination") %>% 
   filter(age_group == "All Ages") %>% 
-  select(year, hb, numberof_terminations)
-
-# abortion data joined to health board names and populations, number of abortion per 1000 women added
-abortion_data <- left_join(abortion_data, health_board_population, by = "hb")  %>% 
+  select(year, hb, numberof_terminations) %>% 
+  left_join(health_board_population, by = "hb")  %>% 
   mutate(abortion_per_1000_women = numberof_terminations/female_repro_population * 1000) %>% 
-  filter(!is.na(hb_name))
-
-
+  filter(!is.na(hb_name)) %>% 
+  filter(year %in% c(2016:2023))
 ```
 
 
+Prescription data has been filtered based on the BNF item code. Codes beginning with 0703 and 21040 were selected as representing contraceptive medication and devices.
 
 
-```{r URLs for prescription data, include=FALSE}
+```{r URLs for prescription data, include = FALSE}
 #prescription data between 2018 and 2023 in a names vector
-
 prescription_data_urls <- c(
-# List for 2023
+  # List for 2023
   "dec_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/00cdf8d7-f784-4e87-894c-34f2540ea6ab/download/pitc202312.csv",
   "nov_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/21d11fed-a494-4e30-9bb6-46143c3b9530/download/pitc202311.csv",
   "oct_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/94134438-db1d-4b8d-8f70-5e9b0e47bd03/download/pitc202310.csv",
@@ -146,8 +111,8 @@ prescription_data_urls <- c(
   "mar_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/8dd06c58-1a09-483a-8a01-5d68cfb8b38e/download/pitc202303.csv",
   "feb_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ad6d7f4e-08fd-40ed-ad49-bf450d386f39/download/pitc202302.csv",
   "jan_2023" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/6caa7144-f0e4-4ab0-b9e4-8fa10c8edf1c/download/pitc202301.csv",
-
-# List for 2022
+  
+  # List for 2022
   "jan_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/53a53d61-3b3b-4a12-888b-a788ce13db9c/download/pitc202201.csv",
   "feb_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/bd7aa5c9-d708-4d0b-9b28-a9d822c84e34/download/pitc202202.csv",
   "mar_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/a0ec3bf2-7339-413b-9c66-2891cfd7919f/download/pitc202203.csv",
@@ -160,8 +125,8 @@ prescription_data_urls <- c(
   "oct_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/bd7bc2cf-4de5-4711-bd5a-9e3b77305453/download/pitc202210.csv",
   "nov_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/023986c0-3bb2-43cb-84e8-2e0b3bb1f55f/download/pitc202211.csv",
   "dec_2022" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/00213ffa-941e-4389-9e6f-3bca8067da8c/download/pitc202212.csv",
-
-# List for 2021
+  
+  # List for 2021
   "jan_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/7722a6e6-a6b6-49ec-aa63-fdc4bc727f05/download/pitc202101.csv",
   "feb_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3f5c55ac-1bcd-4c57-a7b6-12911f15239c/download/pitc202102.csv",
   "mar_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/df6fc708-5c50-4d57-a5c4-faa19a92c227/download/pitc202103.csv",
@@ -174,8 +139,8 @@ prescription_data_urls <- c(
   "oct_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/35cbc6b1-3462-4563-88ba-d57c03782534/download/pitc202110.csv",
   "nov_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/6ba23bd1-f53b-4946-bc79-00633239d08f/download/pitc202111.csv",
   "dec_2021" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ad9e7b46-47fb-4d42-baad-f8e98e8f5936/download/pitc202112.csv",
-
-# List for 2020
+  
+  # List for 2020
   "jan_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/e5c841f2-3e16-428b-97db-0798ec7a5fb4/download/pitc202001.csv",
   "feb_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/af121e7c-4124-4955-92e9-a9580ccd469e/download/pitc202002.csv",
   "mar_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/9581bd8d-5568-4462-93a6-6d7bfbbe7cbc/download/pitc202003.csv",
@@ -188,8 +153,8 @@ prescription_data_urls <- c(
   "oct_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/83bf4892-d246-41f8-a6ca-d44d18e2a2ca/download/pitc202010.csv",
   "nov_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/ab8aa642-2562-4abb-a360-5c5f9e7e349c/download/pitc202011.csv",
   "dec_2020" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0c033702-4d88-4f2d-989c-a709b1f4529e/download/pitc202012.csv",
-
-# List for 2019
+  
+  # List for 2019
   "jan_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3bd6e3cc-b8b7-493b-b6aa-f9fcadbb05d2/download/pitc201901.csv",
   "feb_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3729a5c8-787a-46e3-ab7d-feed9aa91b4e/download/pitc201902.csv",
   "mar_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/87b21840-beb8-40fd-bad8-579643bc8b8b/download/pitc201903.csv",
@@ -202,8 +167,8 @@ prescription_data_urls <- c(
   "oct_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/55d93898-5382-4a59-a42e-bbc68f48b217/download/pitc201910.csv",
   "nov_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/eeee4a8f-3439-425a-aacd-58e536da90a0/download/pitc201911.csv",
   "dec_2019" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/fa276ad2-669a-472f-9c47-809f199fae21/download/pitc201912.csv",
-
-# List for 2018
+  
+  # List for 2018
   "jan_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/82ef2c55-5a31-4759-ab9a-83b176e107f2/download/pitc201801.csv",
   "feb_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/1ae16a5f-aa26-4911-989b-ba4a6ab87037/download/pitc201802.csv",
   "mar_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0b7bc1dd-9731-405b-a55e-656a8c996a58/download/pitc201803.csv",
@@ -216,8 +181,8 @@ prescription_data_urls <- c(
   "oct_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/37e94a73-121e-443e-9564-2e1d9e36c5eb/download/pitc201810.csv",
   "nov_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/9cc56231-f184-4e29-a5ef-e6080bc78e93/download/pitc201811.csv",
   "dec_2018" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/c50ed972-34e8-4cd6-8d2e-349e875c3ffa/download/pitc201812.csv",
- 
-# List for 2017 
+  
+  # List for 2017 
   "jan_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/3def845e-c830-4b73-8e02-e42adcde5afa/download/pitc201701.csv",
   "feb_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/f7a00faf-49ec-4a99-9686-e52b2d1572c4/download/pitc201702.csv",
   "mar_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/06c958d6-bae7-4d1b-9b62-88db123dc7b6/download/pitc201703.csv",
@@ -230,8 +195,8 @@ prescription_data_urls <- c(
   "oct_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/01cdd69a-049a-46cf-a618-75b5f93422f1/download/pitc201710.csv",
   "nov_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0d9b6b7d-bd94-4d72-8806-22025edcdeeb/download/pitc201711.csv",
   "dec_2017" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/a39b254a-ab6a-41d5-a920-5ff34bdb9f6b/download/pitc201712.csv",
-
-# List for 2016
+  
+  # List for 2016
   "jan_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/7c487db9-f450-4319-8b18-4b825380692b/download/pitc201601.csv",
   "feb_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/0727befa-5530-4c1d-aff0-ccb7554eff7a/download/pitc201602.csv",
   "mar_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/20ad9575-4bd7-4bf4-af41-fd36071e2301/download/pitc201603.csv",
@@ -244,107 +209,70 @@ prescription_data_urls <- c(
   "oct_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/f22c20c1-6066-4f7d-a939-3ae654d1467a/download/pitc201610.csv",
   "nov_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/5d421ba3-ccba-4d98-9772-e2e042b29a0f/download/pitc201611.csv",
   "dec_2016" = "https://www.opendata.nhs.scot/dataset/84393984-14e9-4b0d-a797-b288db64d088/resource/597ea4bc-f733-45b6-8a60-5d7a6ac4824c/download/pitc201612.csv"
-
 )
 ```
 
 
-
-```{r Data reading and cleaning, include=FALSE}
-columns_needed_from_prescription <- c("BNFItemCode", "NumberOfPaidItems")
+```{r Data reading and cleaning}
+columns_needed_from_prescription <- c("BNFItemCode", "NumberOfPaidItems", "HBT", "HBT2014", "PaidDateMonth")
 
 read_and_clean <- function(url) {
-  # vroom used as a faster function for reading delimited files
-  # only columns with prescription drug name, health board, and number of items paid selected to make loading onto R more memory efficient
-    #since older data files have health board column named HBT2014 while newer have is named HBT, any_of() is used to select only the ones that exist in the file being read
-  data <- vroom(url, col_select = any_of(c(columns_needed_from_prescription, "HBT", "HBT2014")), skip_empty_rows = TRUE)
-  
+  # only columns with prescription drug name, health board, and number of items paid selected
+  # since older data files have health board column named HBT2014 while newer have is named HBT, any_of() is used to select only the ones that exist in the file being read
+  data <- vroom(url, col_select = any_of(c(columns_needed_from_prescription)), skip_empty_rows = TRUE)
  
   #data filtered for contraceptives (including contraceptive devices) only (based on the BNF code)
-  data_filtered <- data %>%
+  data_filtered <- data %>% 
   filter(str_starts(BNFItemCode, "0703") | str_starts(BNFItemCode, "21040")) %>% 
-    clean_names()
+    clean_names() %>%
+    rename(year = "paid_date_month") %>% 
+    mutate(year = as.numeric(substr(as.character(year), 1, 4))) 
   colnames(data_filtered)[3] ="hb"
-
   
-  # assign function used to create a value with the name of the url from named list and assign read preprocessed data to that variable
+  # assign function used to create an object with the name of the url from named list and assign preprocessed data to it
 name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
 assign(name, data_filtered, envir = .GlobalEnv) 
 }
-
 # apply the outlined function to all data urls
 lapply(prescription_data_urls, read_and_clean)
 ```
 
-```{r Combine all prescription datases, include=FALSE}
-#sum the number of items paid for by health board
-add_year <- function(url) {
-  
-  #get the name of the url form the named list and turn that name into object
-  name <- names(prescription_data_urls)[which(prescription_data_urls == url)] 
-  
-  # get the selected object from the environment
-  data <- get(name) 
-  
-  # add a column with year by extracting the number from the name
-  data <- data %>% 
-    add_column(year = as.numeric(str_extract_all(name, "\\d+")))
-  
-  #create a new object for each modified dataframe
-  object_name <- paste(name, "sum", sep = "_")
-  assign(object_name, data, envir = .GlobalEnv) 
-}
 
-# apply the above function to all dataframes read from urls
-lapply(prescription_data_urls, add_year)
+The data was then further divided into long-term contraceptives (IUD, coil, and implant) lasting several years and short-term contraceptives that have to be taken regularly (oral tablets, cervical caps, and injections). The division was based on the BNF codes with 0703022P representing implants, 0703023 representing IUDs, and 210400002 representing copper coils. The remaining birth control was assigned to the short-term category. Same as abortion data the contraceptive data was normalised by women of reproductive age number in the health board for health board comparison.
 
-#join full prescription dataset with healh board names and populations of women of reproductive age
-full_prescirption_dataset <- bind_rows(mget(paste(names(prescription_data_urls), "sum", sep = "_")))
-full_prescirption_dataset <- left_join(full_prescirption_dataset, health_board_population, by = "hb") 
+We are assuming that there is a direct link between contraceptive dispensation and usage; therefore, in some parts of the report, the dispensation data is referred to as usage data.
 
+```{r Combine all prescription datases}
+# join full prescription dataset with health board names and women populations
+full_prescirption_dataset <- bind_rows(mget(names(prescription_data_urls))) %>%
+  left_join(health_board_population, by = "hb") %>% 
+  mutate(type = case_when(str_detect(bnf_item_code, "0703022P|0703023|210400002") ~ "long-term", .default = "short-term")) 
 ```
 
 
 
-```{r filter datasets to create long term and short term contraception datasets, include=FALSE}
-long_term_contraception <- full_prescirption_dataset %>% 
-  filter(str_detect(bnf_item_code, "0703022P|0703023|210400002")) %>% 
-  group_by(year) %>% 
-  summarise(sum = sum(number_of_paid_items, na.rm = TRUE)/29109) 
-
-short_term_contraception <- full_prescirption_dataset %>% 
-  filter(!str_detect(bnf_item_code, "0703022P|0703023|210400002")) %>% 
-  group_by(year) %>% 
-  summarise(sum = sum(number_of_paid_items, na.rm = TRUE)/865093)
-
-
-```
-
-```{r Contraceptive and abortion data per health board, include=FALSE}
+```{r Contraceptive and abortion data per health board}
 # contraceptives per 1000 women of reproductive age for each health board added as a new column
 contraception_data_hb <- full_prescirption_dataset %>% 
   group_by(year, hb_name, female_repro_population) %>% 
   summarise(total_contraceptives_per_hb=sum(number_of_paid_items)) %>% 
-  mutate(contraceptives_per_1000_women = total_contraceptives_per_hb/female_repro_population) %>% 
   select(-female_repro_population)
 
-# total contraceptives for all health boards representing Islands health board summed together for each year 
+# total contraceptives for all health boards representing Islands health board for each year 
+boards_to_sum <- c("Orkney", "Shetland", "Western Isles")
+
 islands_contraceptives <- full_prescirption_dataset %>% 
-  filter(hb_name %in% c("Orkney", "Shetland", "Western Isles")) %>% 
+  filter(hb_name %in% boards_to_sum) %>% 
   group_by(year) %>% 
   summarise(total_contraceptives_per_hb = sum(number_of_paid_items)) %>% 
-  mutate(hb_name = "Islands")
+  mutate(hb_name = "Island Boards")
 
 # contraception data combined with Islands health board totals
 contraception_data_hb <- bind_rows(contraception_data_hb,islands_contraceptives)  
 
-# abortion data filtered for years of interest
-abortion_data_hb <- abortion_data %>% 
-  filter(year %in% c(2016:2023))
-
 #combined dataframe created from abortion data and contraception data
-combined_data <- left_join(abortion_data_hb, contraception_data_hb, by = c("year", "hb_name")) %>%
-  select(year, hb_name, abortion_per_1000_women, total_contraceptives_per_hb, contraceptives_per_1000_women, female_repro_population) %>% 
+combined_data <- left_join(abortion_data, contraception_data_hb, by = c("year", "hb_name")) %>%
+  select(year, hb_name, abortion_per_1000_women, total_contraceptives_per_hb, female_repro_population) %>% 
   mutate(contraceptives_per_1000_women = total_contraceptives_per_hb/female_repro_population*1000)
 ```
 
@@ -355,44 +283,52 @@ combined_data <- left_join(abortion_data_hb, contraception_data_hb, by = c("year
 
 It has been shown that over the past 8 years, there has been a decline in combined oral contraceptives being prescribed while the progesterone-only pill prescriptions increased [5]. While it shows that women's preference might be shifting away from estrogen-containing products it doesn’t tell much about the overall trend in contraceptive usage.
 
-Figure 1 shows values normalised to 2016 for long-term and short-term contraceptives. There seems to be a nationwide decline in birth control usage. It can be seen that short-term contraception has been on a consistent decline over the past 8 years. Covid doesn’t seem to have had a significant impact on these prescriptions. However, Cocid hindered access to long-term contraceptives. That is likely because the application of intravaginal devices and implants requires medical professionals and during Covid clinics’ had to focus their resources on emergency medical care. Overall, the rise in contraceptive use in 2019 seems to be influenced by both types of contraceptives.
+Figure 1 shows values normalised to 2016 for long-term and short-term contraceptives. There seems to be a nationwide decline in birth control usage. It can be seen that short-term contraception has been on a consistent decline over the past 8 years. Covid doesn’t seem to have had a significant impact on these prescriptions. However, Covid hindered access to long-term contraceptives. That is likely because the application of intravaginal devices and implants requires medical professionals and during Covid clinics’ had to focus their resources on emergency medical care. 
+
+Because of strong Covid's effect on long-term contraceptives it is difficult to see the overall trend. In years before Covid there was a downward trend from 2016 to 2018 but contraception usage spiked in 2019 for both types of contraceptives. It is unclear whether long-term contraceptives use would have continued to grow if Covid didn't have en effect, however seeing that similar spike happened for short-term contraceptives in 2019 it seems unlikely. Therefore, it doesn't look like decline in short-term contraceptives usage can be explained by the shift towards long-term options since trends for both types are very similar apart form Covid period. This overall decline in contraceptives use might be explained by growing worries about using hormonal contraceptives [1]. 
 
 
-
-```{r Figure 1, echo = FALSE, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives'}
-
-print(ggplot() +
-        geom_line(data = long_term_contraception, aes(y = sum, x = year, color = "Long-term"), linewidth = 2) +
-        geom_line(data = short_term_contraception, aes(y = sum, x = year, color = "Short-term"), linewidth=2) +
-        geom_vline(xintercept = 2020, color="grey", size=.5, linetype = "dashed") +
-        geom_vline(xintercept = 2022, color="grey", size=.5, linetype = "dashed") +
+```{r Figure 1, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives'}
+full_prescirption_dataset %>%
+  group_by(year, type) %>% 
+  summarise(total = sum(number_of_paid_items, na.rm = TRUE), groups = 'drop') %>%
+  group_by(type) %>% 
+  mutate(total_2016 = total[year == 2016], total_normalised = total / total_2016) %>% 
+        ggplot(aes(y = total_normalised, x = year, colour = type)) +
+        geom_line(linewidth = 2) +
+        geom_point(size = 3) +
+        geom_vline(xintercept = c(2020,2022), color="grey", size=.5, linetype = "dashed") +
         theme_classic() +
         scale_x_continuous(breaks=c(2016:2023)) +
-        theme(plot.title = element_text(size = 13, 
-                                        hjust = 0,
-                                        face = "bold", 
-                                        margin = margin(10,10,10,10)), 
+        theme(plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10,10,10,10)), 
               axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
               axis.title.y = element_text(size = 11, margin=margin(0,10,0,0))) +
-        labs(title = "Normalised prescription of long-term and short-term contraceptives", 
-             x = "Year", 
-             y = "Normalised value of items dispensed per year",
-             colour = "Legend") +
-        annotate(geom="text", x=2021, y=1, 
-                 label="COVID period", colour = "#71797E")  +
-        scale_color_manual(values = c("Long-term" = "#6D91F2", "Short-term" = "#6DF2A6"))
-)
-
+        labs(title = "Normalised prescription of long-term and short-term contraceptives", x = "Year", y = "Normalised value of items dispensed per year", colour = "Legend") +
+        annotate(geom="text", x=2021, y=1, label="COVID period", colour = "#71797E")  +
+        scale_color_manual(values = c("#6D91F2", "#6DF2A6"))
 ```
 
 ### Contraceptive and Pregnancy Termination Trends within NHS Scotland Health Boards
 
-A negative trend in contraceptive usage can be seen across all health boards (Fig. 2). Most of the health boards have very similar use and trends of contraception, except for Lothian and Dumfries and Galloway. Lothian and Dumfries and Galloway have different contraceptive rates to other boards. Lothian has a significantly lower dispensation of contraceptives, while Dumfries and Galloway has significantly higher. Further analysis is needed to better understand the reasons behind these differences. On average, 736.05 items of contraceptives were dispensed per 1000 in each Health Board in 2016. This number dropped to 626.76 in 2023. While all health boards showcase a decline in contraceptive use, Grampian, Islands, and Lanarkshire had the sharpest decrease from 2016 to 2023.
+```{r}
+# mean of contraceptive items in 2016
+contraceptives_mean_2016 <- combined_data %>% 
+  filter(year == 2016) %>% 
+  summarise(mean =mean(contraceptives_per_1000_women)) %>% 
+  pull(mean)
+# mean of contraceptive items in 2023
+contraceptives_mean_2023 <- combined_data %>% 
+  filter(year == 2023) %>% 
+  summarise(mean =mean(contraceptives_per_1000_women)) %>% 
+  pull(mean)
+```
 
-Table 1 shows a change from 2016 to 2023 in dispensed contraceptives and number of pregnancies terminated for each health board in Scotland. Values higher than the mean are highlighted in red. It can be seen that all health boards experienced an increase in the number of terminated pregnancies with Lanarkshire having more than double the averse of an increase.
 
-```{r, echo = FALSE, fig.cap='Fig. 2: Contraceptives prescription in each NHS Scotland health board'}
+A negative trend in contraceptive usage can be seen across all health boards (Fig. 2). Most of the health boards have very similar use and trends of contraception, except for Lothian and Dumfries and Galloway. Lothian and Dumfries and Galloway have different contraceptive rates to other boards. Lothian has a significantly lower dispensation of contraceptives, while Dumfries and Galloway has significantly higher. Further analysis is needed to better understand the reasons behind these differences. On average, `r contraceptives_mean_2016` items of contraceptives were dispensed per 1000 in each Health Board in 2016. This number dropped to `r contraceptives_mean_2023` in 2023. While all health boards showcase a decline in contraceptive use, Grampian, Islands, and Lanarkshire had the sharpest decrease from 2016 to 2023.
 
+Table 1 shows a change from 2016 to 2023 in dispensed contraceptives and number of pregnancies terminated for each health board in Scotland. Values higher than the mean are highlighted in red. It can be seen that all health boards experienced an increase in the number of terminated pregnancies with Lanarkshire having almost double the average of an increase.
+
+```{r, fig.cap='Fig. 2: Contraceptives prescription in each NHS Scotland health board'}
 # dataframe created with duplicated health board column with different name to allow for plotting all healthboards in grey and one highlighted in each facet grid
 plot_prescription <- combined_data %>% 
   ungroup() %>%
@@ -402,46 +338,25 @@ plot_prescription <- combined_data %>%
 color_vector <- setNames(cols25(length(unique(combined_data$hb_name))), unique(combined_data$hb_name))
 
 print(ggplot() +
-        geom_line(data=plot_prescription , aes(group=hb_name1, y = contraceptives_per_1000_women, x = year), color="grey", size=0.5, alpha=0.5) +
-        geom_line(data = combined_data, aes(group = hb_name, color=hb_name, y = contraceptives_per_1000_women, x = year), size=1.2 ) +
-        geom_smooth(method = "lm", se = FALSE) +
+        geom_line(data=plot_prescription , aes(group=hb_name1, y = contraceptives_per_1000_women, x = year), color="grey", linewidth=0.5, alpha=0.5) +
+        geom_line(data = combined_data, aes(color = hb_name, y = contraceptives_per_1000_women, x = year), linewidth=1.2 ) +
+        geom_point(data = combined_data, aes(color = hb_name, y = contraceptives_per_1000_women, x = year), size=1.2 ) +
         theme_classic() +
-        theme(plot.title = element_text(size = 13, 
-                                        hjust = 0,
-                                        face = "bold", 
-                                        margin = margin(10,10,10,10)), 
+        theme(plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10,10,10,10)), 
               axis.title.x = element_text(size = 11, margin=margin(10,0,0,0)), 
               axis.title.y = element_text(size = 11, margin=margin(0,10,0,0)),
               legend.position="none",
-              strip.text.x = element_text(
-                size = 10, face = "bold"
-              ), strip.background = element_rect(
-                color=FALSE, fill=FALSE
-              )) +
+              strip.text.x = element_text(size = 10, face = "bold"), 
+              strip.background = element_rect(color=NA, fill=NA)) +
         labs(title = "Contraceptive item prescription across NHS Scotland boards", x = "Year", y = "Number of items per 1000 women") +
-        facet_wrap(~hb_name, nrow = 3, 
-                   labeller = label_wrap_gen(18)) +
+        facet_wrap(~hb_name, nrow = 3, labeller = label_wrap_gen(18)) +
         scale_colour_manual(values = color_vector) 
 )
-# mean of contraceptive items in 2016
-contraceptives_mean_2016 <- combined_data %>% 
-  filter(year == 2016) %>% 
-  summarise(mean =mean(contraceptives_per_1000_women)) %>% 
-  pull(mean)
-
-# mean of contraceptive items in 2023
-contraceptives_mean_2023 <- combined_data %>% 
-  filter(year == 2023) %>% 
-  summarise(mean =mean(contraceptives_per_1000_women)) %>% 
-  pull(mean)
 ```
 
 
 
-
- 
-
-```{r Changes from 2016 to 2023, include=FALSE}
+```{r Changes from 2016 to 2023}
 # get a difference of 2016 and 2023 for each board
 combined_data_2016_2023_diff <- combined_data %>% 
   filter(year %in% c(2016, 2023)) %>%
@@ -450,7 +365,7 @@ combined_data_2016_2023_diff <- combined_data %>%
 ```
 
 
-```{r Changes in aboriton and contraception usage from 2016 to 2023, echo=FALSE, paged.print=TRUE}
+```{r Changes in aboriton and contraception usage from 2016 to 2023, paged.print=TRUE, fig.cap='Table 1. Pregnancy terminations and contraceptive usage change in each health board from 2016 to 2023. Values higher than the mean are highlighted in red.' }
 combined_data_2016_2023_diff %>% 
   gt() %>% 
   tab_header(title = md("**Table 1.** Change in Abortion and Contraceptives Prescription Rate Across Scotland Health Boards from 2016 to 2023")) %>% 
@@ -482,32 +397,21 @@ combined_data_2016_2023_diff %>%
 With contraceptive dispensation on a decline, it begs the question of how this might correlate with pregnancy termination data. Each coloured point in Figure 3 represents a data value from a single year, plotted with abortion rates on the y-axis and contraceptive use on the x-axis. There is a relationship between abortion and contraceptive use. Abortion decreases in all health boards when contraceptive prescriptions increase. However, several health boards stand out with slightly different rates from other boards. Dumfries and Galloway has been mentioned before as the board with the highest contraceptive consumption. Interestingly, the abortion rate in this region doesn’t seem to deviate from the values of the cluster of other boards. On the other hand, the Islands have much lower contraceptive use compared to Dumfries and Galloway but have around half of the abortions. Lothian, with the lowest usage of contraceptives, doesn’t display much higher abortion rates. Therefore, abortion rate and contraceptive usage correlate within health boards but such consensus is not maintained across health boards.
 
 
-```{r, echo=FALSE, fig.cap="Fig 3. Correlation between aboirtion and ocntraception figures in each health board"}
-
-
-
-print(
-combined_data %>% 
-  ggplot(aes(x = contraceptives_per_1000_women, y = abortion_per_1000_women, colour = hb_name)) +
-  geom_point(size = 1) +
-  geom_smooth(method = "lm", se = FALSE, aes(colour = hb_name)) +
-  theme_classic() +
-  theme(
-    plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10, 10, 10, 10)),
-    axis.title.x = element_text(size = 11, margin = margin(10, 0, 0, 0)), 
-    axis.title.y = element_text(size = 11, margin = margin(0, 10, 0, 0)),
-    strip.text.x = element_text(size = 10, face = "bold")
-  ) +
-  labs( 
-    title = "Contraceptives and Abortion Trends between 2016 and 2023", 
-    x = "Total Contraceptives per year", 
-    y = "Total Abortion per year" , colour = "Health Boards"
-  ) +
-  scale_colour_manual(values = color_vector) 
-)
-
-
-  
+```{r,  fig.cap="Fig 3. Correlation between aboirtion and ocntraception figures in each health board"}
+  combined_data %>%  
+    ggplot(aes(x = contraceptives_per_1000_women, y = abortion_per_1000_women, colour = hb_name)) +
+    geom_point(size = 1) +
+    geom_smooth(method = "lm", se = FALSE, aes(colour = hb_name)) +
+    theme_classic() +
+    theme(
+      plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10, 10, 10, 10)),
+      axis.title.x = element_text(size = 11, margin = margin(10, 0, 0, 0)), 
+      axis.title.y = element_text(size = 11, margin = margin(0, 10, 0, 0)),
+      strip.text.x = element_text(size = 10, face = "bold")
+    ) +
+    labs( title = "Contraceptives and Abortion Trends between 2016 and 2023", x = "Total Contraceptives per year", y = "Total Abortion per year", colour = "Health Boards"
+    ) +
+    scale_colour_manual(values = color_vector) 
 ```
 
 
