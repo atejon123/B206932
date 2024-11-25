@@ -256,7 +256,7 @@ Figure 1 shows values normalised to 2016 for long-term and short-term contracept
 
 Because of the strong COVID-19 effect on long-term contraceptives, it is difficult to see its overall trend. In years before the COVID-19 pandemic, there was a downward trend from 2016 to 2018 but contraception usage spiked in 2019 for both types of contraceptives. It is unclear whether long-term contraceptive use would have continued to increase if the pandemic didn't happen. However, it doesn't look like the decline in short-term contraceptive usage can be explained by the shift towards long-term options since trends for both types are very similar outside of the COVID-19 pandemic period. This trend might be explained by so-called "hormonophobia" [1]. Most of the female contraceptives contain hormones and people, in recent years, are increasingly worried about their side effects.
 
-```{r Figure 1, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives'}
+```{r Figure 1, fig.cap='Fig. 1: Normalised prescription of long-term and short-term contraceptives', fig.height=4.1}
 base_theme <- theme_classic() + #base these for all upcoming plots created
   theme(plot.title = element_text(size = 13, hjust = 0, face = "bold", margin = margin(10, 10, 10, 10)),
         axis.title.x = element_text(size = 11, margin = margin(10, 0, 0, 0)),
@@ -281,12 +281,12 @@ full_prescirption_dataset %>%
 
 A negative trend in contraceptive usage can be seen across all health boards (Fig. 2). Most of the health boards have very similar use rates and contraception trends, except for Lothian and Dumfries and Galloway. Lothian has a significantly lower dispensation of contraceptives, while Dumfries and Galloway have substantially higher. Further analysis is needed to better understand the reasons behind these differences. An important aspect to explore in future studies is whether the deprivation levels in the region might be causing these differences.
 
-```{r, fig.cap='Fig. 2: Contraceptives prescription in each NHS Scotland health board'}
+```{r, fig.cap='Fig. 2: Contraceptives prescription in each NHS Scotland health board', fig.height=4.1}
 # dataframe created with duplicated health board column with different name to allow for plotting all healthboards in grey and one highlighted in each facet grid
-plot_prescription <- combined_data %>% 
+plot_prescription <- combined_data %>%
   ungroup() %>%
-  mutate(hb_name1 = hb_name) %>% 
-  select(-hb_name) 
+  mutate(hb_name1 = hb_name) %>%
+  select(-hb_name)
 
 color_vector <- setNames(cols25(length(unique(combined_data$hb_name))), unique(combined_data$hb_name))
 
@@ -324,18 +324,20 @@ combined_data_2016_2023_diff %>%
   cols_align(align = "center", columns = c(diff_abor, diff_contr)) %>% 
   tab_spanner(label = "Calculated per 1000 of women", columns = c("diff_abor", "diff_contr")) %>% 
   grand_summary_rows(columns = c(diff_abor, diff_contr), fns = list("Overall Mean Change" = ~mean(., na.rm = TRUE)), fmt = list(~ fmt_number(., decimals = 2))) %>% 
+  fmt_number(columns = everything(), decimals = 2) %>% 
   opt_align_table_header(align = "left") %>% 
-  tab_style(locations = cells_body(columns = `diff_abor`,rows = `diff_abor` > 4.03),
+  tab_style(locations = cells_body(columns = `diff_abor`,rows = `diff_abor` > mean(diff_abor)),
             style = list(cell_text(color = 'red'))) %>% 
-  tab_style(locations = cells_body(columns = `diff_contr`, rows = `diff_contr` < (-109.29)),
-            style = list(cell_text(color = 'red')))
+  tab_style(locations = cells_body(columns = `diff_contr`, rows = `diff_contr` < mean(diff_contr)),
+            style = list(cell_text(color = 'red'))) %>% 
+  tab_options(table.font.size = "small")
 ```
 
 ### Contraceptives and Pregnancy Termination Correlation across NHS Scotland Health Boards
 
 Each coloured point in Figure 3 represents a data value from a single year, plotted with abortion rates on the y-axis and contraceptive use on the x-axis. Abortion decreases in all health boards when contraceptive prescriptions increase. However, several health boards stand out with slightly different rates from other boards. Dumfries and Galloway has been mentioned before as the board with the highest contraceptive consumption.  Interestingly, the abortion rate in this region doesn’t seem to deviate from the values of the cluster of other boards. On the other hand, the Islands have much lower contraceptive use compared to Dumfries and Galloway but have around half of the abortions. Lothian, with the lowest usage of contraceptives, doesn’t display much higher abortion rates. Therefore, abortion rate and contraceptive usage correlate within health boards but such consensus is not maintained across health boards.
 
-```{r,  fig.cap="Fig 3. Correlation between aboirtion and ocntraception figures in each health board"}
+```{r,  fig.cap="Fig 3. Correlation between aboirtion and ocntraception figures in each health board", fig.height=4.1}
   combined_data %>%  
     ggplot(aes(x = contraceptives_per_1000_women, y = abortion_per_1000_women, colour = hb_name)) +
     geom_point(size = 1) +
